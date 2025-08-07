@@ -16,4 +16,13 @@ class Board
       puts ""
     end
   end
+
+  # --------------  PRIVATE METHODS  -------------------
+  def assign_color_to_squares
+    board.each_with_index do |row, row_index|
+      row.each_with_index do |square, col_index|
+        square.assign_color(row_index, col_index)
+      end
+    end
+  end
 end
