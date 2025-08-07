@@ -1,20 +1,23 @@
 # Board is made up of squares
 class Square
+  RESET_TERMINAL = "\e[0m".freeze
   WHITE_BACKGROUND = "\e[47m".freeze
   CYAN_BACKGROUND = "\e[48;5;45m".freeze
-  RESET_TERMINAL = "\e[0m".freeze
 
   attr_accessor :color
 
   def to_s
-    "Square"
+    "#{color}  #{RESET_TERMINAL}"
   end
 
   def assign_color(row_index, col_index)
     sum = add(row_index, col_index)
-    self.color = WHITE_BACKGROUND if sum.even?
-
-    self.color = CYAN_BACKGROUND
+  
+    if sum.even?
+      self.color = WHITE_BACKGROUND 
+    else
+      self.color = CYAN_BACKGROUND
+    end
   end
 
   # ------------------------- PRIVATE METHODS -------------------------------
