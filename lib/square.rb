@@ -1,8 +1,7 @@
+require_relative "ansi_codes"
 # Board is made up of squares
 class Square
-  RESET_TERMINAL = "\e[0m".freeze
-  WHITE_BACKGROUND = "\e[47m".freeze
-  CYAN_BACKGROUND = "\e[48;5;45m".freeze
+  include ANSI
 
   attr_accessor :color, :piece
 

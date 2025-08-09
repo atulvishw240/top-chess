@@ -1,6 +1,9 @@
+require_relative "ansi_codes"
 require_relative "position"
 # Represents Bishop in Our Game
 class Bishop
+  include ANSI
+
   attr_accessor :position
   attr_reader :color, :unicode
 
@@ -31,6 +34,6 @@ class Bishop
   end
 
   def to_s
-    "#{color}#{unicode} \e[0m"
+    "#{color}#{unicode} #{RESET_TERMINAL}"
   end
 end
