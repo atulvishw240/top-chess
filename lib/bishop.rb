@@ -1,10 +1,12 @@
 require_relative "position"
 # Represents Bishop in Our Game
 class Bishop
-  attr_accessor :position, :color
+  attr_accessor :position
+  attr_reader :color, :unicode
 
   def initialize(color)
     @color = color
+    @unicode = "\u{265D}"
   end
 
   def all_possible_moves
@@ -26,5 +28,9 @@ class Bishop
     end
 
     moves
+  end
+
+  def to_s
+    "#{color}#{unicode}"
   end
 end
