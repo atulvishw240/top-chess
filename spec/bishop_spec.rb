@@ -33,5 +33,13 @@ describe Bishop do
       moves = bishop.all_possible_moves
       expect(moves).to eq(poss_moves)
     end
+
+    it "returns all possible moves for Bishop at [3, 3]" do
+      bishop = Bishop.new("Black")
+      bishop.position = Position.new(3, 3)
+      poss_moves = [[4, 4], [5, 5], [6, 6], [7, 7], [4, 2], [5, 1], [6, 0], [2, 4], [1, 5], [0, 6], [2, 2], [1, 1], [0, 0]]
+      moves = bishop.all_possible_moves
+      expect(moves).to eq(poss_moves)
+    end
   end
 end
