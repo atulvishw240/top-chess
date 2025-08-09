@@ -10,7 +10,7 @@ class Bishop
   def all_possible_moves
     moves = []
   
-    diagonals = [[1, 1], [1, -1]] # [upper right, upper left]
+    diagonals = [[1, 1], [1, -1], [-1, -1]] # [upper right, upper left, lower left]
     diagonals.each do |diagonal|
       row_index = position.row
       col_index = position.col
