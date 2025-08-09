@@ -5,6 +5,7 @@ class Board
 
   def initialize
     @board = Array.new(8) { Array.new(8) { Square.new } }
+    assign_color_to_squares
   end
 
   def display
@@ -17,6 +18,11 @@ class Board
     end
   end
 
+  def update(piece_or_marker, position)
+    square = get_square(position)
+    square.piece = piece_or_marker
+  end
+
   # --------------  PRIVATE METHODS  -------------------
   def assign_color_to_squares
     board.each_with_index do |row, row_index|
@@ -24,5 +30,12 @@ class Board
         square.assign_color(row_index, col_index)
       end
     end
+  end
+
+  def get_square(position)
+    row_index = position.row
+    col_index = position.col
+
+    board[row_index][col_index]
   end
 end

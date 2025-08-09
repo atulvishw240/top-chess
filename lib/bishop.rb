@@ -31,6 +31,6 @@ class Bishop
   end
 
   def to_s
-    "#{color}#{unicode}"
+    "#{color}#{unicode} \e[0m"
   end
 end

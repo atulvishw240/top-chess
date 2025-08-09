@@ -4,10 +4,14 @@ class Square
   WHITE_BACKGROUND = "\e[47m".freeze
   CYAN_BACKGROUND = "\e[48;5;45m".freeze
 
-  attr_accessor :color
+  attr_accessor :color, :piece
+
+  def initialize
+    @piece = "  "
+  end
 
   def to_s
-    "#{color}  #{RESET_TERMINAL}"
+    "#{color}#{piece}#{RESET_TERMINAL}"
   end
 
   def assign_color(row_index, col_index)
