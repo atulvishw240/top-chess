@@ -6,4 +6,8 @@ class Position
     @row = row
     @col = col
   end
+
+  def valid?
+    row.between?(0, 7) && col.between?(0, 7)
+  end
 end
