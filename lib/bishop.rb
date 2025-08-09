@@ -8,29 +8,21 @@ class Bishop
   end
 
   def all_possible_moves
-    row_index = position.row
-    col_index = position.col
-
     moves = []
-    loop do
-      row_index += 1
-      col_index += 1
+  
+    diagonals = [[1, 1], [1, -1]] # [upper right, upper left]
+    diagonals.each do |diagonal|
+      row_index = position.row
+      col_index = position.col
 
-      break unless Position.new(row_index, col_index).valid?
+      loop do
+        row_index += diagonal[0]
+        col_index += diagonal[1]
 
-      moves << [row_index, col_index]
-    end
+        break unless Position.new(row_index, col_index).valid?
 
-    row_index = position.row
-    col_index = position.col
-
-    loop do
-      row_index += 1
-      col_index -= 1
-
-      break unless Position.new(row_index, col_index).valid?
-
-      moves << [row_index, col_index]
+        moves << [row_index, col_index]
+      end
     end
 
     moves
