@@ -25,5 +25,13 @@ describe Bishop do
       moves = bishop.all_possible_moves
       expect(moves).to eq(poss_moves)
     end
+
+    it "returns lower right diagonal moves for Bishop at [7, 0]" do
+      bishop = Bishop.new("Black")
+      bishop.position = Position.new(7, 0)
+      poss_moves = [[6, 1], [5, 2], [4, 3], [3, 4], [2, 5], [1, 6], [0, 7]]
+      moves = bishop.all_possible_moves
+      expect(moves).to eq(poss_moves)
+    end
   end
 end
