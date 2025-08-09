@@ -16,9 +16,23 @@ class Bishop
       row_index += 1
       col_index += 1
 
-      return moves unless Position.new(row_index, col_index).valid?
+      break unless Position.new(row_index, col_index).valid?
 
       moves << [row_index, col_index]
     end
+
+    row_index = position.row
+    col_index = position.col
+
+    loop do
+      row_index += 1
+      col_index -= 1
+
+      break unless Position.new(row_index, col_index).valid?
+
+      moves << [row_index, col_index]
+    end
+
+    moves
   end
 end
