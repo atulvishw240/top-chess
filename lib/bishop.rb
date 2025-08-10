@@ -8,6 +8,8 @@ class Bishop < Piece
   attr_accessor :position
   attr_reader :color, :unicode
 
+  DIAGONALS_DIR = [[1, 1], [1, -1], [-1, 1], [-1, -1]].freeze # [upper right, upper left, lower right, lower left]
+
   def initialize(color)
     @color = color
     @unicode = "\u{265D}"
@@ -15,9 +17,8 @@ class Bishop < Piece
 
   def all_possible_moves(board)
     moves = []
-    diagonals = four_diagonals_of_bishop
 
-    diagonals.each do |diagonal|
+    DIAGONALS_DIR.each do |diagonal|
       calculate_moves_for_one_diagonal(moves, diagonal)
     end
 
@@ -36,10 +37,6 @@ class Bishop < Piece
 
       moves << [row_index, col_index]
     end
-  end
-
-  def four_diagonals_of_bishop
-    [[1, 1], [1, -1], [-1, 1], [-1, -1]] # from Bishop POV [upper right, upper left, lower right, lower left]
   end
 
   def to_s
