@@ -13,7 +13,7 @@ class Bishop < Piece
     @unicode = "\u{265D}"
   end
 
-  def all_possible_moves
+  def all_possible_moves(board)
     moves = []
     diagonals = four_diagonals_of_bishop
 
