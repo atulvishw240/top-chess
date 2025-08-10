@@ -1,7 +1,8 @@
 require_relative "ansi_codes"
 require_relative "position"
+require_relative "piece"
 # Represents Bishop in Our Game
-class Bishop
+class Bishop < Piece
   include ANSI
 
   attr_accessor :position
