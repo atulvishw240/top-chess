@@ -9,8 +9,8 @@ class Square
     @piece = "  "
   end
 
-  def to_s
-    "#{color}#{piece}#{RESET_TERMINAL}"
+  def contains_piece?
+    piece.is_a?(Piece)
   end
 
   def assign_color(row_index, col_index)
@@ -21,6 +21,10 @@ class Square
     else
       self.color = CYAN_BACKGROUND
     end
+  end
+
+  def to_s
+    "#{color}#{piece}#{RESET_TERMINAL}"
   end
 
   # ------------------------- PRIVATE METHODS -------------------------------

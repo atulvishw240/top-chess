@@ -23,6 +23,11 @@ class Board
     square.piece = piece_or_marker
   end
 
+  def contains_piece?(position)
+    square = get_square(position)
+    square.contains_piece?
+  end
+
   # --------------  PRIVATE METHODS  -------------------
   def assign_color_to_squares
     board.each_with_index do |row, row_index|
