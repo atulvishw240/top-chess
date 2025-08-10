@@ -14,23 +14,31 @@ class Bishop
 
   def all_possible_moves
     moves = []
-  
-    diagonals = [[1, 1], [1, -1], [-1, 1], [-1, -1]] # [upper right, upper left, lower right, lower left]
+    diagonals = four_diagonals_of_bishop
+
     diagonals.each do |diagonal|
-      row_index = position.row
-      col_index = position.col
-
-      loop do
-        row_index += diagonal[0]
-        col_index += diagonal[1]
-
-        break unless Position.new(row_index, col_index).valid?
-
-        moves << [row_index, col_index]
-      end
+      calculate_moves_for_one_diagonal(moves, diagonal)
     end
 
     moves
+  end
+
+  def calculate_moves_for_one_diagonal(moves, diagonal)
+    row_index = position.row
+    col_index = position.col
+
+    loop do
+      row_index += diagonal[0]
+      col_index += diagonal[1]
+
+      break unless Position.new(row_index, col_index).valid?
+
+      moves << [row_index, col_index]
+    end
+  end
+
+  def four_diagonals_of_bishop
+    [[1, 1], [1, -1], [-1, 1], [-1, -1]] # from Bishop POV [upper right, upper left, lower right, lower left]
   end
 
   def to_s
