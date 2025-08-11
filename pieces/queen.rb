@@ -1,9 +1,9 @@
 require_relative "piece"
-require_relative "../lib/calculate_moves"
+require_relative "../lib/mod_moves"
 require_relative "../lib/board"
 # Represents Queen in our Game
 class Queen < Piece
-  include CalcMoves
+  include Moves
 
   MOVES_DIR = [[1, 1], [1, -1], [-1, 1], [-1, -1], [-1, 0], [1, 0], [0, 1], [0, -1]].freeze
 

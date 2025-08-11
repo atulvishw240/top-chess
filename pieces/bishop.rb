@@ -1,8 +1,8 @@
 require_relative "piece"
-require_relative "../lib/calculate_moves"
+require_relative "../lib/mod_moves"
 # Represents Bishop in Our Game
 class Bishop < Piece
-  include CalcMoves
+  include Moves
 
   MOVES_DIR = [[1, 1], [1, -1], [-1, 1], [-1, -1]].freeze # [upper right, upper left, lower right, lower left]
 

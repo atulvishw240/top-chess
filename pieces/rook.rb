@@ -1,9 +1,9 @@
 require_relative "piece"
-require_relative "../lib/calculate_moves"
+require_relative "../lib/mod_moves"
 
 # Represents Rook
 class Rook < Piece
-  include CalcMoves
+  include Moves
 
   # [front, back, right, left]
   MOVES_DIR = [[-1, 0], [1, 0], [0, 1], [0, -1]].freeze
