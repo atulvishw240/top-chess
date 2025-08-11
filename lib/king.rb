@@ -1,19 +1,11 @@
-require_relative "ansi_codes"
-require_relative "position"
 require_relative "piece"
 # Represents King
-class King
-  include ANSI
-
-  attr_accessor :position
-  attr_reader :color, :unicode
-
+class King < Piece
   # [top_left, front, top_right, left, right, bottom_left, down, bottom_right]
   MOVES_DIR = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]].freeze
 
-  def initialize(color)
-    @color = color
-    @unicode = "\u{265A}"
+  def unicode
+    "\u{265A}"
   end
 
   def all_possible_moves(board)
@@ -35,9 +27,5 @@ class King
     end
 
     move
-  end
-
-  def to_s
-    "#{color}#{unicode} #{RESET_TERMINAL}"
   end
 end

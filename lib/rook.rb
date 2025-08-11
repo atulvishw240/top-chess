@@ -1,20 +1,12 @@
-require_relative "ansi_codes"
-require_relative "position"
 require_relative "piece"
 
 # Represents Rook
-class Rook
-  include ANSI
-
-  attr_accessor :position
-  attr_reader :color, :unicode
-
+class Rook < Piece
   # [front, back, right, left]
   MOVES_DIR = [[-1, 0], [1, 0], [0, 1], [0, -1]].freeze
 
-  def initialize(color)
-    @color = color
-    @unicode = "\u{265C}"
+  def unicode
+    "\u{265C}"
   end
 
   def all_possible_moves(board)
@@ -51,9 +43,5 @@ class Rook
     end
 
     moves
-  end
-
-  def to_s
-    "#{color}#{unicode} #{RESET_TERMINAL}"
   end
 end
