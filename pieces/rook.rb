@@ -1,7 +1,10 @@
 require_relative "piece"
+require_relative "../lib/calculate_moves"
 
 # Represents Rook
 class Rook < Piece
+  include CalcMoves
+
   # [front, back, right, left]
   MOVES_DIR = [[-1, 0], [1, 0], [0, 1], [0, -1]].freeze
 
@@ -14,34 +17,6 @@ class Rook < Piece
 
     MOVES_DIR.each do |dir|
       moves += calculate_moves_in_one_dir(board, dir)
-    end
-
-    moves
-  end
-
-  # ------------------------- PRIVATE METHODDS ---------------------------------------------
-
-  def calculate_moves_in_one_dir(board, dir) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-    moves = []
-
-    row_index = dir[0] + position.row
-    col_index = dir[1] + position.col
-    position = Position.new(row_index, col_index)
-
-    while position.valid?
-      move = [row_index, col_index]
-
-      if board.contains_piece?(position)
-        piece = board.get_piece(position)
-        moves << move unless piece.color == color
-        break
-      end
-
-      moves << move
-
-      row_index += dir[0]
-      col_index += dir[1]
-      position = Position.new(row_index, col_index)
     end
 
     moves
