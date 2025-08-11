@@ -1,6 +1,6 @@
 # Calculate Moves in a dir (Direction)
 # direction is given as coordinates
-module CalcMoves
+module Moves
   def all_possible_moves(moves_dir, board)
     moves = []
 
