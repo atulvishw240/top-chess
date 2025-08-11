@@ -17,6 +17,8 @@ class Bishop < Piece
     moves
   end
 
+  # ------------------------- PRIVATE METHODDS ---------------------------------------------
+
   def calculate_moves_for_one_diagonal(board, diagonal) # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
     moves = []
 

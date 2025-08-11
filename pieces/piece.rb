@@ -14,7 +14,7 @@ class Piece
 
   def unicode; end
 
-  def all_possible_moves; end
+  def all_possible_moves(board); end
 
   def to_s
     "#{color}#{unicode} #{RESET_TERMINAL}"

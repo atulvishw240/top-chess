@@ -15,12 +15,13 @@ class Square
 
   def assign_color(row_index, col_index)
     sum = add(row_index, col_index)
-  
-    if sum.even?
-      self.color = WHITE_BACKGROUND 
-    else
-      self.color = CYAN_BACKGROUND
-    end
+
+    self.color =
+      if sum.even?
+        WHITE_BACKGROUND
+      else
+        CYAN_BACKGROUND
+      end
   end
 
   def to_s
@@ -29,6 +30,6 @@ class Square
 
   # ------------------------- PRIVATE METHODS -------------------------------
   def add(row_index, col_index)
-    return row_index + col_index
+    row_index + col_index
   end
 end

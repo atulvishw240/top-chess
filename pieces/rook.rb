@@ -19,6 +19,8 @@ class Rook < Piece
     moves
   end
 
+  # ------------------------- PRIVATE METHODDS ---------------------------------------------
+
   def calculate_moves_in_one_dir(board, dir) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     moves = []
 

@@ -12,6 +12,8 @@ class King < Piece
     MOVES_DIR.map { |dir| calculate_move(board, dir) }.compact
   end
 
+  # ------------------------- PRIVATE METHODDS ---------------------------------------------
+
   def calculate_move(board, dir)
     row_index = position.row + dir[0]
     col_index = position.col + dir[1]
