@@ -1,5 +1,5 @@
-require_relative "position"
-require_relative "ansi_codes"
+require_relative "../lib/position"
+require_relative "../lib/ansi_codes"
 # Implements our Piece
 class Piece
   include ANSI

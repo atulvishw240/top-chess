@@ -1,7 +1,7 @@
 require_relative "../lib/position"
 require_relative "../lib/board"
-require_relative "../lib/king"
-require_relative "../lib/bishop"
+require_relative "../pieces/king"
+require_relative "../pieces/bishop"
 
 describe King do
   before(:each) do
