@@ -12,13 +12,7 @@ class Rook < Piece
     "\u{265C}"
   end
 
-  def all_possible_moves(board)
-    moves = []
-
-    MOVES_DIR.each do |dir|
-      moves += calculate_moves_in_one_dir(board, dir)
-    end
-
-    moves
+  def get_possible_moves(board)
+    all_possible_moves(MOVES_DIR, board)
   end
 end

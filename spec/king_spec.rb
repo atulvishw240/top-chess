@@ -11,11 +11,11 @@ describe King do
     @bishop2 = Bishop.new("Black")
   end
 
-  describe "#all_possible_moves" do
+  describe "#get_possible_moves" do
     it "returns all possible moves for King at [3, 3]" do
       @king.position = Position.new(3, 3)
       poss_moves = [[2, 2], [2, 3], [2, 4], [3, 2], [3, 4], [4, 2], [4, 3], [4, 4]]
-      moves = @king.all_possible_moves(@board)
+      moves = @king.get_possible_moves(@board)
       expect(moves).to eq(poss_moves)
     end
 
@@ -24,7 +24,7 @@ describe King do
       @board.update(@bishop, Position.new(3, 2))
       @board.update(@bishop2, Position.new(4, 3))
       poss_moves = [[2, 2], [2, 3], [2, 4], [3, 4], [4, 2], [4, 4]]
-      moves = @king.all_possible_moves(@board)
+      moves = @king.get_possible_moves(@board)
       expect(moves).to eq(poss_moves)
     end
   end

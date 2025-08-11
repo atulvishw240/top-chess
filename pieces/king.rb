@@ -8,7 +8,7 @@ class King < Piece
     "\u{265A}"
   end
 
-  def all_possible_moves(board)
+  def get_possible_moves(board)
     MOVES_DIR.map { |dir| calculate_move(board, dir) }.compact
   end
 

@@ -11,13 +11,7 @@ class Queen < Piece
     "\u{265B}"
   end
 
-  def all_possible_moves(board)
-    moves = []
-
-    MOVES_DIR.each do |diagonal|
-      moves += calculate_moves_in_one_dir(board, diagonal)
-    end
-
-    moves
+  def get_possible_moves(board)
+    all_possible_moves(MOVES_DIR, board)
   end
 end

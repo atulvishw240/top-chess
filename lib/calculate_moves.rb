@@ -1,6 +1,19 @@
 # Calculate Moves in a dir (Direction)
 # direction is given as coordinates
 module CalcMoves
+  def all_possible_moves(moves_dir, board)
+    moves = []
+
+    moves_dir.each do |dir|
+      moves += calculate_moves_in_one_dir(board, dir)
+    end
+
+    moves
+  end
+
+  # ------------------------------ PRIVATE METHODS -----------------------------
+  private
+
   def calculate_moves_in_one_dir(board, dir) # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
     moves = []
 
