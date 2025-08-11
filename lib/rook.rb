@@ -1,10 +1,11 @@
 require_relative "ansi_codes"
 require_relative "position"
 require_relative "piece"
-require_relative "board"
 
 # Represents Rook
 class Rook
+  include ANSI
+
   attr_accessor :position
   attr_reader :color, :unicode
 
@@ -50,5 +51,9 @@ class Rook
     end
 
     moves
+  end
+
+  def to_s
+    "#{color}#{unicode} #{RESET_TERMINAL}"
   end
 end
