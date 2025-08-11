@@ -3,6 +3,8 @@ require_relative "position"
 require_relative "piece"
 # Represents King
 class King
+  include ANSI
+
   attr_accessor :position
   attr_reader :color, :unicode
 
@@ -33,5 +35,9 @@ class King
     end
 
     move
+  end
+
+  def to_s
+    "#{color}#{unicode} #{RESET_TERMINAL}"
   end
 end
