@@ -24,4 +24,20 @@ class Pawn < Piece
   def starting_position
     color == BLACK_FOREGROUND ? 1 : 6
   end
+
+  def one_step
+    # If pawn is Black then
+    #   increment row by 1
+    # Else
+    #   decrement row by 1
+    # END
+    row_index = position.row
+    col_index = position.col
+
+    if color == BLACK_FOREGROUND
+      [row_index + 1, col_index]
+    else
+      [row_index - 1, col_index]
+    end
+  end
 end
