@@ -26,11 +26,6 @@ class Pawn < Piece
   end
 
   def one_step
-    # If pawn is Black then
-    #   increment row by 1
-    # Else
-    #   decrement row by 1
-    # END
     row_index = position.row
     col_index = position.col
 
@@ -39,5 +34,22 @@ class Pawn < Piece
     else
       [row_index - 1, col_index]
     end
+  end
+
+  def two_steps
+    row_index = position.row
+    col_index = position.col
+    moves = []
+
+    2.times do
+      moves <<
+        if color == BLACK_FOREGROUN
+          [row_index + 1, col_index]
+        else
+          [row_index - 1, col_index]
+        end
+    end
+
+    moves
   end
 end
