@@ -15,23 +15,13 @@ class Pawn < Piece
   end
 
   def start?
-    # Grab the pawn row index and its color
-    # If pawn color is BLACK then
-    #   its starting position is row 1
-    # Else
-    #   its starting position is row 6
-    # END
-
     row_index = position.row
-    start_pos =
-      if color == BLACK_FOREGROUND
-        1
-      else
-        6
-      end
+    start = starting_position
 
-    # Now check if the pawn row index is same as the start index.
-    # If yes then return true else return false
-    row_index == start_pos
+    row_index == start
+  end
+
+  def starting_position
+    color == BLACK_FOREGROUND ? 1 : 6
   end
 end
