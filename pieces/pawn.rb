@@ -14,22 +14,19 @@ class Pawn < Piece
     # END
   end
 
-  def start?
-    row_index = position.row
-    start = starting_position
-
-    row_index == start
-  end
-
-  def starting_position
-    black? ? 1 : 6
-  end
-
   def move
     row_index = position.row
     col_index = position.col
     steps = no_of_steps
     move_one_or_two_steps(steps, row_index, col_index)
+  end
+
+  def no_of_steps
+    if start?
+      2
+    else
+      1
+    end
   end
 
   def move_one_or_two_steps(steps, row_index, col_index)
@@ -47,14 +44,6 @@ class Pawn < Piece
     moves
   end
 
-  def no_of_steps
-    if start?
-      2
-    else
-      1
-    end
-  end
-
   def forward(row_index)
     if black?
       row_index + 1
@@ -66,8 +55,19 @@ class Pawn < Piece
   def black?
     color == BLACK_FOREGROUND
   end
+
+  def start?
+    row_index = position.row
+    start = starting_position
+
+    row_index == start
+  end
+
+  def starting_position
+    black? ? 1 : 6
+  end
 end
 
-pawn = Pawn.new("\e[30m")
-pawn.position = Position.new(1, 3)
+pawn = Pawn.new("\e[38;5;160m")
+pawn.position = Position.new(6, 3)
 p pawn.move
