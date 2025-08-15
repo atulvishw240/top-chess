@@ -6,12 +6,8 @@ class Pawn < Piece
   end
 
   def get_possible_moves(board)
-    # Moves
-    # If pawn is at start THEN
-    #   Move 2 steps
-    # Else
-    #   Move 1 step
-    # END
+    # Captures functionality is left for later
+    move
   end
 
   def move
