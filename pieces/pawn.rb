@@ -63,7 +63,3 @@ class Pawn < Piece
     black? ? 1 : 6
   end
 end
-
-pawn = Pawn.new("\e[38;5;160m")
-pawn.position = Position.new(6, 3)
-p pawn.move
