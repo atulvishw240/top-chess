@@ -1,14 +1,11 @@
 require_relative "square"
 # Handle Game Effect on Board
 class Board
-  attr_accessor :board, :black, :white
+  attr_accessor :board
 
-  def initialize(black, white)
-    @black = black
-    @white = white
+  def initialize
     @board = Array.new(8) { Array.new(8) { Square.new } }
     assign_color_to_squares
-    setup(black, white)
   end
 
   def display
@@ -50,15 +47,5 @@ class Board
     col_index = position.col
 
     board[row_index][col_index]
-  end
-
-  def setup(black, white)
-    black.each do |piece|
-      update(piece, piece.position)
-    end
-
-    white.each do |piece|
-      update(piece, piece.position)
-    end
   end
 end
