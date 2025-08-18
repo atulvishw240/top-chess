@@ -1,6 +1,9 @@
 require_relative "square"
+require_relative "ansi_codes"
 # Handle Game Effect on Board
 class Board
+  include ANSI
+
   attr_accessor :board
 
   def initialize
@@ -25,7 +28,7 @@ class Board
 
   def delete_piece_or_marker(position)
     square = get_square(position)
-    square.piece = "  "
+    square.piece = EMPTY
   end
 
   def contains_piece?(position)

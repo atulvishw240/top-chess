@@ -6,7 +6,7 @@ class Square
   attr_accessor :color, :piece
 
   def initialize
-    @piece = "  "
+    @piece = EMPTY
   end
 
   def contains_piece?
