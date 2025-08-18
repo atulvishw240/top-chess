@@ -1,4 +1,4 @@
-# Contains all the ansi codes used throughout the program
+# Contains all the Constants codes used throughout the program
 module Constants
   RESET_TERMINAL = "\e[0m".freeze
   WHITE_BACKGROUND = "\e[47m".freeze

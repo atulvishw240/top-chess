@@ -1,8 +1,8 @@
 require_relative "../lib/position"
-require_relative "../lib/ansi_codes"
+require_relative "../lib/constants"
 # Implements our Piece
 class Piece
-  include ANSI
+  include Constants
 
   attr_accessor :position
   attr_reader :color

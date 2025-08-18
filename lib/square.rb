@@ -1,7 +1,7 @@
-require_relative "ansi_codes"
+require_relative "constants"
 # Board is made up of squares
 class Square
-  include ANSI
+  include Constants
 
   attr_accessor :color, :piece
 

@@ -1,8 +1,8 @@
 require_relative "square"
-require_relative "ansi_codes"
+require_relative "constants"
 # Handle Game Effect on Board
 class Board
-  include ANSI
+  include Constants
 
   attr_accessor :board
 
