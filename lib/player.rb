@@ -34,7 +34,7 @@ class Player
       prev_position = piece.position
       board.delete_piece_or_marker(prev_position)
       piece.move(new_position)
-      board.update(piece, new_position)
+      board.update(piece)
       return
     end
 

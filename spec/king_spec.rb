@@ -20,8 +20,8 @@ describe King do
       @king = King.new("Black", Position.new(3, 3))
       @bishop = Bishop.new("Black", Position.new(3, 2))
       @bishop2 = Bishop.new("Black", Position.new(4, 3))
-      @board.update(@bishop, @bishop.position)
-      @board.update(@bishop2, @bishop2.position)
+      @board.update(@bishop)
+      @board.update(@bishop2)
       poss_moves = [[2, 2], [2, 3], [2, 4], [3, 4], [4, 2], [4, 4]]
       moves = @king.get_possible_moves(@board)
       expect(moves).to eq(poss_moves)

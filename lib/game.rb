@@ -42,7 +42,7 @@ class Game
 
   def setup_pieces_on_board(set)
     set.pieces.each do |piece|
-      board.update(piece, piece.position)
+      board.update(piece)
     end
   end
 
