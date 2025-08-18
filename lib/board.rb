@@ -23,6 +23,11 @@ class Board
     square.piece = piece_or_marker
   end
 
+  def delete_piece_or_marker(position)
+    square = get_square(position)
+    square.piece = "  "
+  end
+
   def contains_piece?(position)
     square = get_square(position)
     square.contains_piece?
