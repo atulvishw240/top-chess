@@ -21,4 +21,22 @@ class Player
     puts "The coordinates you entered are not correct. Try again!!"
     select_piece(poss_selections)
   end
+
+  def make_move(board, piece)
+    all_moves = piece.get_possible_moves(board)
+    p all_moves
+    puts "Enter the coordinates of where you would like to move your piece."
+    puts "The coordinates should be in the format (row,col): "
+    move = gets.chomp.split(",").map(&:to_i)
+
+    if all_moves.include?(move)
+      position = Position.new(move[0], move[1])
+      piece.position = position
+      board.update(piece, position)
+      return
+    end
+
+    puts "The coordinates you entered are not correct. Try again!!"
+    make_move(board, piece)
+  end
 end

@@ -14,6 +14,8 @@ class Game
     p selections
     piece = current_player.select_piece(board, selections)
     p piece
+    current_player.make_move(board, piece)
+    board.display
   end
 
   def current_player
