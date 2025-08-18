@@ -7,15 +7,18 @@ class Pawn < Piece
 
   def get_possible_moves(board)
     # Captures functionality is left for later
-    move
-  end
-
-  def move
     row_index = position.row
     col_index = position.col
     steps = no_of_steps
     move_one_or_two_steps(steps, row_index, col_index)
   end
+
+  # def move
+  #   row_index = position.row
+  #   col_index = position.col
+  #   steps = no_of_steps
+  #   move_one_or_two_steps(steps, row_index, col_index)
+  # end
 
   def no_of_steps
     if start?
