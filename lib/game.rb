@@ -1,17 +1,35 @@
 # Contains Game Logic
 class Game
-  attr_reader :board, :black, :white
+  attr_reader :board, :current_player_id
 
-  def initialize(board, black, white)
+  def initialize(board, player1, player2)
     @board = board
-    @black = black
-    @white = white
+    @players = [player1, player2]
+    @current_player_id = 0
   end
 
   def play
     setup
     selections = black.possible_selections(board)
     p selections
+    selection = current_player.select_piece(selections)
+    p selection
+  end
+
+  def current_player
+    @players[current_player_id]
+  end
+
+  def opponent_player
+    @players[opponent_player_id]
+  end
+
+  def opponent_player_id
+    1 - current_player_id
+  end
+
+  def switch_players!
+    @current_player_id -= 1
   end
 
   def setup
@@ -26,11 +44,11 @@ class Game
     end
   end
 
-  # def black
-  #   @black.pieces
-  # end
+  def black
+    current_player.set
+  end
 
-  # def white
-  #   @white.pieces
-  # end
+  def white
+    opponent_player.set
+  end
 end
