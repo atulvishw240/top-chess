@@ -12,8 +12,8 @@ class Game
     setup
     selections = black.possible_selections(board)
     p selections
-    selection = current_player.select_piece(selections)
-    p selection
+    piece = current_player.select_piece(board, selections)
+    p piece
   end
 
   def current_player
