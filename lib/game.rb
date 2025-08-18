@@ -1,11 +1,17 @@
 # Contains Game Logic
 class Game
-  attr_reader :board
+  attr_reader :board, :black, :white
 
   def initialize(board, black, white)
     @board = board
     @black = black
     @white = white
+  end
+
+  def play
+    setup
+    selections = black.possible_selections(board)
+    p selections
   end
 
   def setup
@@ -15,16 +21,16 @@ class Game
   end
 
   def setup_pieces_on_board(set)
-    set.each do |piece|
+    set.pieces.each do |piece|
       board.update(piece, piece.position)
     end
   end
 
-  def black
-    @black.pieces
-  end
+  # def black
+  #   @black.pieces
+  # end
 
-  def white
-    @white.pieces
-  end
+  # def white
+  #   @white.pieces
+  # end
 end
