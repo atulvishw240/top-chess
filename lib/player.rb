@@ -30,10 +30,11 @@ class Player
     move = gets.chomp.split(",").map(&:to_i)
 
     if all_moves.include?(move)
-      position = Position.new(move[0], move[1])
-      board.delete_piece_or_marker(piece.position)
-      piece.move(position)
-      board.update(piece, position)
+      new_position = Position.new(move[0], move[1])
+      prev_position = piece.position
+      board.delete_piece_or_marker(prev_position)
+      piece.move(new_position)
+      board.update(piece, new_position)
       return
     end
 
