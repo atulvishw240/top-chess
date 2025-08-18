@@ -10,12 +10,15 @@ class Game
 
   def play
     setup
-    selections = black.possible_selections(board)
-    p selections
-    piece = current_player.select_piece(board, selections)
-    p piece
-    current_player.make_move(board, piece)
-    board.display
+    loop do
+      selections = current_player.set.possible_selections(board)
+      p selections
+      piece = current_player.select_piece(board, selections)
+      p piece
+      current_player.make_move(board, piece)
+      board.display
+      switch_players!
+    end
   end
 
   def current_player
@@ -31,7 +34,7 @@ class Game
   end
 
   def switch_players!
-    @current_player_id -= 1
+    @current_player_id = 1 - @current_player_id
   end
 
   def setup
