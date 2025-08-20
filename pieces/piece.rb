@@ -21,10 +21,6 @@ class Piece
     raise NotImplementedError, "All Pieces must implement get_possible_moves"
   end
 
-  def move(position)
-    self.position = position
-  end
-
   def to_s
     "#{color}#{unicode} #{RESET_TERMINAL}"
   end
