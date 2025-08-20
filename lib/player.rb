@@ -31,7 +31,7 @@ class Player
 
     if all_moves.include?(move)
       new_position = Position.new(move[0], move[1])
-      board.delete(piece)
+      board.remove(piece)
       piece.move(new_position)
       board.update(piece)
       return

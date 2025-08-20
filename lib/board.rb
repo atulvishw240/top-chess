@@ -27,7 +27,7 @@ class Board
     square.piece = piece_or_marker
   end
 
-  def delete(piece_or_marker)
+  def remove(piece_or_marker)
     position = piece_or_marker.position
     square = get_square(position)
     square.piece = EMPTY
