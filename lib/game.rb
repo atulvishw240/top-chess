@@ -11,19 +11,30 @@ class Game
   def play
     setup
     loop do
+      # Available selections for a player
       selections = current_player_set.possible_selections(board)
       p selections
+
+      # Select a piece to make a move
       selection = current_player.select_piece(selections)
       position = Position.new(selection[0], selection[1])
       piece = board.get_piece(position)
       p piece
+
+      # All possible moves for the selected piece
       moves = piece.get_possible_moves(board)
       p moves
+
+      # Select a move out of all possible moves for a piece
       move = current_player.select_move(moves)
       new_position = Position.new(move[0], move[1])
+
+      # Remove piece from old position and move to a new position
       board.remove(piece)
-      piece.move(new_position)
+      piece.position = new_position
       board.update(piece)
+
+      # Display updated state of board and switch players
       board.display
       switch_players!
     end
