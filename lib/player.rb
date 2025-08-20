@@ -18,7 +18,7 @@ class Player
     select_piece(poss_selections)
   end
 
-  def make_move(poss_moves)
+  def select_move(poss_moves)
     puts "Enter the coordinates of where you would like to move your piece."
     puts "The coordinates should be in the format (row,col): "
     move = gets.chomp.split(",").map(&:to_i)

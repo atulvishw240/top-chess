@@ -19,7 +19,7 @@ class Game
       p piece
       moves = piece.get_possible_moves(board)
       p moves
-      move = current_player.make_move(moves)
+      move = current_player.select_move(moves)
       new_position = Position.new(move[0], move[1])
       board.remove(piece)
       piece.move(new_position)
