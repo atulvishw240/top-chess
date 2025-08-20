@@ -1,5 +1,5 @@
 require_relative "piece"
-require_relative "../lib/mod_move"
+require_relative "../modules/mod_move"
 # Represents Knight in Our Game
 class Knight < Piece
   include Move

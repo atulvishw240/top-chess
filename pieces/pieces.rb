@@ -5,7 +5,7 @@ require_relative "queen"
 require_relative "king"
 require_relative "pawn"
 require_relative "../lib/position"
-require_relative "../lib/constants"
+require_relative "../modules/constants"
 # Reperesents Pieces which contains "Piece" objects
 class Pieces
   include Constants

@@ -1,5 +1,5 @@
 require_relative "piece"
-require_relative "../lib/mod_moves"
+require_relative "../modules/mod_moves"
 require_relative "../lib/board"
 # Represents Queen in our Game
 class Queen < Piece

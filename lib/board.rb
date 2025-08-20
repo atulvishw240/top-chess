@@ -1,5 +1,5 @@
 require_relative "square"
-require_relative "constants"
+require_relative "../modules/constants"
 # Handle Game Effect on Board
 class Board
   include Constants

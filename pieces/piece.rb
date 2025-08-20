@@ -1,5 +1,5 @@
 require_relative "../lib/position"
-require_relative "../lib/constants"
+require_relative "../modules/constants"
 # Implements our Piece
 class Piece
   include Constants
