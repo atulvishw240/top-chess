@@ -11,7 +11,7 @@ class Game
   def play
     setup
     loop do
-      selections = current_player.set.possible_selections(board)
+      selections = current_player_set.possible_selections(board)
       p selections
       selection = current_player.select_piece(selections)
       position = Position.new(selection[0], selection[1])
@@ -46,8 +46,8 @@ class Game
   end
 
   def setup
-    setup_pieces_on_board(black)
-    setup_pieces_on_board(white)
+    setup_pieces_on_board(current_player_set)
+    setup_pieces_on_board(opponent_player_set)
     board.display
   end
 
@@ -57,11 +57,11 @@ class Game
     end
   end
 
-  def black
+  def current_player_set
     current_player.set
   end
 
-  def white
+  def opponent_player_set
     opponent_player.set
   end
 end
