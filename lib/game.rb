@@ -13,9 +13,17 @@ class Game
     loop do
       selections = current_player.set.possible_selections(board)
       p selections
-      piece = current_player.select_piece(board, selections)
+      selection = current_player.select_piece(selections)
+      position = Position.new(selection[0], selection[1])
+      piece = board.get_piece(position)
       p piece
-      current_player.make_move(board, piece)
+      moves = piece.get_possible_moves(board)
+      p moves
+      move = current_player.make_move(moves)
+      new_position = Position.new(move[0], move[1])
+      board.remove(piece)
+      piece.move(new_position)
+      board.update(piece)
       board.display
       switch_players!
     end
