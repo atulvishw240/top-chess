@@ -11,7 +11,7 @@ describe Board do
     it "returns the piece at position" do
       position = Position.new(3, 3)
       @bishop = Bishop.new("Black", position)
-      @board.update(@bishop)
+      @board.update(@bishop, position)
 
       piece = @board.get_piece(position)
       expect(piece).to eq(@bishop)
@@ -22,7 +22,7 @@ describe Board do
     it "returns true if there's a piece at pos" do
       position = Position.new(3, 3)
       @bishop = Bishop.new("Black", position)
-      @board.update(@bishop)
+      @board.update(@bishop, position)
 
       expect(true).to eq(@board.contains_piece?(position))
     end

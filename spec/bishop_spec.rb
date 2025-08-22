@@ -46,9 +46,9 @@ describe Bishop do
 
     it "returns all possible moves for @bishop at [0, 0] blocked by his own piece at [5, 5]" do
       @bishop = Bishop.new("Black", Position.new(0, 0))
-      @board.update(@bishop)
+      @board.update(@bishop, @bishop.position)
       @bishop2 = Bishop.new("Black", Position.new(5, 5))
-      @board.update(@bishop2)
+      @board.update(@bishop2, @bishop2.position)
       poss_moves = [[1, 1], [2, 2], [3, 3], [4, 4]]
       moves = @bishop.get_possible_moves(@board)
       expect(moves).to eq(poss_moves)
@@ -56,9 +56,9 @@ describe Bishop do
 
     it "returns all possible moves for @bishop at [0, 0] blocked by opponent's piece at [5, 5]" do
       @bishop = Bishop.new("Black", Position.new(0, 0))
-      @board.update(@bishop)
+      @board.update(@bishop, @bishop.position)
       @bishop2 = Bishop.new("White", Position.new(5, 5))
-      @board.update(@bishop2)
+      @board.update(@bishop2, @bishop2.position)
       poss_moves = [[1, 1], [2, 2], [3, 3], [4, 4], [5, 5]]
       moves = @bishop.get_possible_moves(@board)
       expect(moves).to eq(poss_moves)
