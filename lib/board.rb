@@ -21,10 +21,17 @@ class Board
     end
   end
 
-  def update(piece_or_marker)
-    position = piece_or_marker.position
-    square = get_square(position)
-    square.piece = piece_or_marker
+  def update(piece, new_position)
+    # Piece position gets updated
+    # Place piece on new square
+    # For the old position mark it as empty
+    prev_position = piece.position
+    prev_square = get_square(prev_position)
+    prev_square.piece = EMPTY
+
+    piece.position = new_position
+    square = get_square(new_position)
+    square.piece = piece
   end
 
   def remove(piece_or_marker)
