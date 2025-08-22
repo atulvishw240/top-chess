@@ -9,10 +9,11 @@ class Game
   end
 
   def play
-    setup
+    setup_pieces_on_board
+    board.display
     loop do
       # Available selections for a player
-      selections = current_player_set.possible_selections(board)
+      selections = board.possible_pieces_selection(current_player)
       p selections
 
       # Select a piece to make a move
@@ -30,9 +31,7 @@ class Game
       new_position = Position.new(move[0], move[1])
 
       # Remove piece from old position and move to a new position
-      board.remove(piece)
-      piece.position = new_position
-      board.update(piece)
+      board.update(piece, new_position)
 
       # Display updated state of board and switch players
       board.display
@@ -56,23 +55,9 @@ class Game
     @current_player_id = 1 - @current_player_id
   end
 
-  def setup
-    setup_pieces_on_board(current_player_set)
-    setup_pieces_on_board(opponent_player_set)
-    board.display
-  end
-
-  def setup_pieces_on_board(set)
-    set.pieces.each do |piece|
-      board.update(piece)
+  def setup_pieces_on_board
+    board.pieces.each do |piece|
+      board.update(piece, piece.position)
     end
-  end
-
-  def current_player_set
-    current_player.set
-  end
-
-  def opponent_player_set
-    opponent_player.set
   end
 end
