@@ -48,6 +48,25 @@ class Board
     end
   end
 
+  def possible_pieces_selection(player)
+    selections = []
+    pieces.each do |piece|
+      next if piece.color != player.color
+
+      all_possible_moves = piece.get_possible_moves(self)
+      next if all_possible_moves.empty?
+
+      position = piece.position
+      row_index = position.row
+      col_index = position.col
+      selection = [row_index, col_index]
+
+      selections << selection
+    end
+
+    selections
+  end
+
   # --------------  PRIVATE METHODS  -------------------
   def assign_color_to_squares
     board.each_with_index do |row, row_index|
