@@ -10,4 +10,8 @@ class Position
   def valid?
     row.between?(0, 7) && col.between?(0, 7)
   end
+
+  def ==(other)
+    row == other.row && col == other.col
+  end
 end
