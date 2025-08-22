@@ -4,7 +4,7 @@ class Player
 
   def initialize(name, color)
     @name = name
-    @set = color
+    @color = color
   end
 
   def select_piece(poss_selections)
