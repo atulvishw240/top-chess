@@ -1,10 +1,10 @@
 # Represents Player
 class Player
-  attr_reader :name, :set
+  attr_reader :name, :color
 
-  def initialize(name, set)
+  def initialize(name, color)
     @name = name
-    @set = set
+    @set = color
   end
 
   def select_piece(poss_selections)
