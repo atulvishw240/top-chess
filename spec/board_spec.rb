@@ -1,10 +1,12 @@
 require_relative "../lib/board"
 require_relative "../lib/position"
 require_relative "../pieces/bishop"
-require_relative "../pieces/piece"
+require_relative "../pieces/pieces"
+
 describe Board do
   before(:each) do
-    @board = Board.new
+    @pieces = Pieces.new("Black")
+    @board = Board.new(@pieces)
   end
 
   describe "#get_piece(position)" do
