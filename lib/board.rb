@@ -23,22 +23,10 @@ class Board
   end
 
   def update(piece, new_position)
-    # Piece position gets updated
-    # Place piece on new square
-    # For the old position mark it as empty
-    prev_position = piece.position
-    prev_square = get_square(prev_position)
-    prev_square.piece = EMPTY
-
+    mark_square_empty(piece.position)
     piece.position = new_position
     square = get_square(new_position)
     square.piece = piece
-  end
-
-  def remove(piece_or_marker)
-    position = piece_or_marker.position
-    square = get_square(position)
-    square.piece = EMPTY
   end
 
   def contains_piece?(position)
@@ -53,13 +41,9 @@ class Board
 
   def delete_piece(position)
     pieces.each do |piece|
-      # If piece position is same as 'position' then delete piece from array
-      # Mark previous position occupied by the piece as empty
       next unless position == piece.position
 
-      prev_position = piece.position
-      prev_square = get_square(prev_position)
-      prev_square.piece = EMPTY
+      mark_square_empty(piece.position)
       pieces.delete(piece)
     end
   end
@@ -78,5 +62,10 @@ class Board
     col_index = position.col
 
     board[row_index][col_index]
+  end
+
+  def mark_square_empty(position)
+    square = get_square(position)
+    square.piece = EMPTY
   end
 end
