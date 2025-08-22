@@ -4,10 +4,11 @@ require_relative "../modules/constants"
 class Board
   include Constants
 
-  attr_accessor :board
+  attr_accessor :board, :pieces
 
-  def initialize
+  def initialize(pieces)
     @board = Array.new(8) { Array.new(8) { Square.new } }
+    @pieces = pieces
     assign_color_to_squares
   end
 
@@ -48,6 +49,19 @@ class Board
   def get_piece(position)
     square = get_square(position)
     square.piece
+  end
+
+  def delete_piece(position)
+    pieces.each do |piece|
+      # If piece position is same as 'position' then delete piece from array
+      # Mark previous position occupied by the piece as empty
+      next unless position == piece.position
+
+      prev_position = piece.position
+      prev_square = get_square(prev_position)
+      prev_square.piece = EMPTY
+      pieces.delete(piece)
+    end
   end
 
   # --------------  PRIVATE METHODS  -------------------
