@@ -29,6 +29,7 @@ class Game
       # Select a move out of all possible moves for a piece
       move = current_player.select_move(moves)
       new_position = Position.new(move[0], move[1])
+      board.delete_piece(new_position) if capture?(new_position)
 
       # Remove piece from old position and move to a new position
       board.update(piece, new_position)
@@ -37,6 +38,11 @@ class Game
       board.display
       switch_players!
     end
+  end
+
+  def capture?(position)
+    # If move contains a piece then its a capture. Because a piece can't possibly move to the position of another of its pieces
+    board.contains_piece?(position)
   end
 
   def current_player
