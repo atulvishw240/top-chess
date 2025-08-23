@@ -20,4 +20,12 @@ describe Position do
       expect(false).to eq(bool)
     end
   end
+
+  describe "==" do
+    it "checks if two position objects are equal" do
+      position = Position.new(3, 3)
+      position2 = Position.new(3, 3)
+      expect(true).to eq(position == position2)
+    end
+  end
 end
