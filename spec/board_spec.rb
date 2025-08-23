@@ -3,10 +3,11 @@ require_relative "../lib/position"
 require_relative "../pieces/bishop"
 require_relative "../pieces/pieces"
 
+BLACK_FOREGROUND = "\e[30m".freeze
 describe Board do
   before(:each) do
-    @pieces = Pieces.new("Black")
-    @board = Board.new(@pieces)
+    @pieces = Pieces.new(BLACK_FOREGROUND)
+    @board = Board.new(@pieces.pieces)
   end
 
   describe "#get_piece(position)" do
@@ -42,6 +43,15 @@ describe Board do
       @board.update(piece, new_position)
 
       expect(piece).to eq(@board.get_piece(new_position))
+    end
+  end
+
+  describe "#delete" do
+    it "deletes piece from Board" do
+      position = Position.new(0, 0)
+      # Deleted rook from 0, 0
+      @board.delete_piece(position)
+      expect(false).to eq(@board.contains_piece?(position))
     end
   end
 end
