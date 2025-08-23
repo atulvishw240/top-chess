@@ -13,7 +13,7 @@ class Game
     board.display
     loop do
       # Available selections for a player
-      selections = board.possible_pieces_selection(current_player)
+      selections = board.possible_pieces_selection(current_player.color)
       p selections
 
       # Select a piece to make a move

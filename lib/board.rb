@@ -48,10 +48,10 @@ class Board
     end
   end
 
-  def possible_pieces_selection(player)
+  def possible_pieces_selection(color)
     selections = []
     pieces.each do |piece|
-      next if piece.color != player.color
+      next if piece.color != color
 
       all_possible_moves = piece.get_possible_moves(self)
       next if all_possible_moves.empty?
