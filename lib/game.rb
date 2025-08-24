@@ -40,6 +40,13 @@ class Game
     end
   end
 
+  def check?
+    # FOR all opponent pieces
+    #   Calculate all possible moves
+    #   If all possible moves contain the coordinates of current player's king THEN
+    #   he's in check otherwise he isn't
+  end
+
   def capture?(position)
     # If move contains a piece then its a capture. Because a piece can't possibly move to the position of another of its pieces
     board.contains_piece?(position)
