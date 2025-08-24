@@ -48,10 +48,11 @@ describe Board do
 
   describe "#delete" do
     it "deletes piece from Board" do
-      position = Position.new(0, 0)
-      # Deleted rook from 0, 0
+      position = Position.new(0, 2)
+      piece = Bishop.new(BLACK_FOREGROUND, position)
+      @board.update(piece, piece.position)
       @board.delete_piece(position)
-      expect(false).to eq(@board.contains_piece?(position))
+      expect(@board.contains_piece?(position)).to eq(false)
     end
   end
 end
