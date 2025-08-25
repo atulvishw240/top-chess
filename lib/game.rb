@@ -16,11 +16,12 @@ class Game
       selections = board.possible_pieces_selection(current_player.color)
       p selections
 
+      puts ""
+      p check?
       # Select a piece to make a move
       selection = current_player.select_piece(selections)
       position = Position.new(selection[0], selection[1])
       piece = board.get_piece(position)
-      p piece
 
       # All possible moves for the selected piece
       moves = piece.get_possible_moves(board)
@@ -45,6 +46,22 @@ class Game
     #   Calculate all possible moves
     #   If all possible moves contain the coordinates of current player's king THEN
     #   he's in check otherwise he isn't
+    selections = board.possible_pieces_selection(opponent_player.color)
+    pieces = []
+    selections.each do |selection|
+      position = Position.new(selection[0], selection[1])
+      pieces << board.get_piece(position)
+    end
+
+    moves = []
+    pieces.each do |piece|
+      moves += piece.get_possible_moves(board)
+    end
+
+    curr_king = board.king(current_player.color)
+    position = curr_king.position
+    king_coordinate = [position.row, position.col]
+    moves.include?(king_coordinate)
   end
 
   def capture?(position)

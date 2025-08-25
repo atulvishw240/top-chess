@@ -67,6 +67,12 @@ class Board
     selections
   end
 
+  def king(color)
+    pieces.each do |piece|
+      return piece if piece.color == color && piece.is_a?(King)
+    end
+  end
+
   # --------------  PRIVATE METHODS  -------------------
   def assign_color_to_squares
     board.each_with_index do |row, row_index|
