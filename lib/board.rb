@@ -23,10 +23,10 @@ class Board
   end
 
   def update(piece, new_position)
-    mark_square_empty(piece.position)
+    prev_position = piece.position
+    update_square(EMPTY, prev_position)
     piece.position = new_position
-    square = get_square(new_position)
-    square.piece = piece
+    update_square(piece, new_position)
   end
 
   def contains_piece?(position)
@@ -43,7 +43,7 @@ class Board
     pieces.each do |piece|
       next unless position == piece.position
 
-      mark_square_empty(piece.position)
+      update_square(EMPTY, piece.position)
       pieces.delete(piece)
     end
   end
@@ -51,25 +51,17 @@ class Board
   def possible_pieces_selection(color)
     selections = []
     pieces.each do |piece|
-      next if piece.color != color
+      next unless same_color?(piece, color)
 
-      all_possible_moves = piece.get_possible_moves(self)
-      next if all_possible_moves.empty?
-
-      position = piece.position
-      row_index = position.row
-      col_index = position.col
-      selection = [row_index, col_index]
-
-      selections << selection
+      selections << possible_piece_selection(piece)
     end
 
-    selections
+    selections.compact # remove nil
   end
 
   def king(color)
     pieces.each do |piece|
-      return piece if piece.color == color && piece.is_a?(King)
+      return piece if same_color_king?(piece, color)
     end
   end
 
@@ -89,8 +81,27 @@ class Board
     board[row_index][col_index]
   end
 
-  def mark_square_empty(position)
+  def update_square(update_with, position)
     square = get_square(position)
-    square.piece = EMPTY
+    square.piece = update_with
+  end
+
+  def possible_piece_selection(piece)
+    all_possible_moves = piece.get_possible_moves(self)
+
+    return nil if all_possible_moves.empty?
+
+    position = piece.position
+    row_index = position.row
+    col_index = position.col
+    [row_index, col_index]
+  end
+
+  def same_color?(piece, color)
+    piece.color == color
+  end
+
+  def same_color_king?(piece, color)
+    same_color?(piece, color) && piece.is_a?(King)
   end
 end
