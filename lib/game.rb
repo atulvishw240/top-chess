@@ -13,7 +13,7 @@ class Game
     board.display
     loop do
       # Available selections for a player
-      selections = board.possible_pieces_selection(current_player.color)
+      selections = possible_pieces_selection(current_player.color)
       p selections
 
       puts ""
@@ -46,7 +46,7 @@ class Game
     #   Calculate all possible moves
     #   If all possible moves contain the coordinates of current player's king THEN
     #   he's in check otherwise he isn't
-    selections = board.possible_pieces_selection(opponent_player.color)
+    selections = possible_pieces_selection(opponent_player.color)
     pieces = []
     selections.each do |selection|
       position = Position.new(selection[0], selection[1])
@@ -58,7 +58,7 @@ class Game
       moves += piece.get_possible_moves(board)
     end
 
-    curr_king = board.king(current_player.color)
+    curr_king = king(current_player.color)
     position = curr_king.position
     king_coordinate = [position.row, position.col]
     moves.include?(king_coordinate)
@@ -89,5 +89,41 @@ class Game
     board.pieces.each do |piece|
       board.update(piece, piece.position)
     end
+  end
+
+  def possible_pieces_selection(color)
+    selections = []
+    board.pieces.each do |piece|
+      next unless same_color?(piece, color)
+
+      selections << possible_piece_selection(piece)
+    end
+
+    selections.compact # remove nil
+  end
+
+  def king(color)
+    board.pieces.each do |piece|
+      return piece if same_color_king?(piece, color)
+    end
+  end
+
+  def possible_piece_selection(piece)
+    all_possible_moves = piece.get_possible_moves(board)
+
+    return nil if all_possible_moves.empty?
+
+    position = piece.position
+    row_index = position.row
+    col_index = position.col
+    [row_index, col_index]
+  end
+
+  def same_color?(piece, color)
+    piece.color == color
+  end
+
+  def same_color_king?(piece, color)
+    same_color?(piece, color) && piece.is_a?(King)
   end
 end

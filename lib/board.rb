@@ -48,23 +48,6 @@ class Board
     end
   end
 
-  def possible_pieces_selection(color)
-    selections = []
-    pieces.each do |piece|
-      next unless same_color?(piece, color)
-
-      selections << possible_piece_selection(piece)
-    end
-
-    selections.compact # remove nil
-  end
-
-  def king(color)
-    pieces.each do |piece|
-      return piece if same_color_king?(piece, color)
-    end
-  end
-
   # --------------  PRIVATE METHODS  -------------------
   def assign_color_to_squares
     board.each_with_index do |row, row_index|
@@ -84,24 +67,5 @@ class Board
   def update_square(update_with, position)
     square = get_square(position)
     square.piece = update_with
-  end
-
-  def possible_piece_selection(piece)
-    all_possible_moves = piece.get_possible_moves(self)
-
-    return nil if all_possible_moves.empty?
-
-    position = piece.position
-    row_index = position.row
-    col_index = position.col
-    [row_index, col_index]
-  end
-
-  def same_color?(piece, color)
-    piece.color == color
-  end
-
-  def same_color_king?(piece, color)
-    same_color?(piece, color) && piece.is_a?(King)
   end
 end
