@@ -42,21 +42,11 @@ class Game
   end
 
   def check?
-    # FOR all opponent pieces
-    #   Calculate all possible moves
-    #   If all possible moves contain the coordinates of current player's king THEN
-    #   he's in check otherwise he isn't
-    selections = possible_pieces_selection(opponent_player.color)
-    pieces = []
-    selections.each do |selection|
-      position = Position.new(selection[0], selection[1])
-      pieces << board.get_piece(position)
-    end
-
+    pieces = pieces_set(opponent_player.color)
     moves = []
-    pieces.each do |piece|
-      moves += piece.get_possible_moves(board)
-    end
+    pieces.each { |piece| moves += piece.get_possible_moves(board) }
+
+    moves.delete_if { |move| move.flatten.empty? }
 
     curr_king = king(current_player.color)
     position = curr_king.position
@@ -65,7 +55,7 @@ class Game
   end
 
   def capture?(position)
-    # If move contains a piece then its a capture. Because a piece can't possibly move to the position of another of its pieces
+    # If move contains a piece then its a capture.
     board.contains_piece?(position)
   end
 
@@ -91,39 +81,22 @@ class Game
     end
   end
 
-  def possible_pieces_selection(color)
-    selections = []
-    board.pieces.each do |piece|
-      next unless same_color?(piece, color)
-
-      selections << possible_piece_selection(piece)
-    end
-
-    selections.compact # remove nil
-  end
-
   def king(color)
     board.pieces.each do |piece|
-      return piece if same_color_king?(piece, color)
+      return piece if same_color?(piece, color) && piece.is_a?(King)
     end
-  end
-
-  def possible_piece_selection(piece)
-    all_possible_moves = piece.get_possible_moves(board)
-
-    return nil if all_possible_moves.empty?
-
-    position = piece.position
-    row_index = position.row
-    col_index = position.col
-    [row_index, col_index]
   end
 
   def same_color?(piece, color)
     piece.color == color
   end
 
-  def same_color_king?(piece, color)
-    same_color?(piece, color) && piece.is_a?(King)
+  def pieces_set(color)
+    pieces = []
+    board.pieces.each do |piece|
+      pieces << piece if same_color?(piece, color)
+    end
+
+    pieces
   end
 end
