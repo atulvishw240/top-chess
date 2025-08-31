@@ -12,8 +12,17 @@ class Game
     setup_pieces_on_board
     board.display
     loop do
+      # Get all the pieces for current player
+      # Select those pieces whose all_possible_moves set is non empty
+      # Store the coordinates of all these pieces in the selections array and pass it around
       # Available selections for a player
-      selections = possible_pieces_selection(current_player.color)
+
+      pieces = pieces_set(current_player.color)
+      pieces.reject! { |piece| piece.get_possible_moves(board).empty? }
+      selections = pieces.map do |piece|
+        [piece.position.row, piece.position.col]
+      end
+
       p selections
 
       puts ""
