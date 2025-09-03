@@ -10,45 +10,32 @@ class Game
 
   def play
     setup_pieces_on_board
-    board.display
     loop do
+      board.display
       p check?
 
-      # Get all pieces of current player
-      pieces = pieces_set(current_player.color)
-      # FOR each piece
-      selections = []
-      pieces.each do |piece|
-        #   Calculate all possible moves
-        moves = piece.get_possible_moves(board)
-        #   Select only those moves which gets us out of check
-        filtered_moves = filter_moves_that_does_not_remove_check(piece, moves)
-        selections << [piece.position.row, piece.position.col] unless filtered_moves.empty?
-      end
-
-      #   If you get a non-empty set in previous step then add this piece to "set of possible selections"
-      # ENDFOR
-      # return "set of possible selections"
-
-      # pieces = pieces_set(current_player.color)
-      # pieces.reject! { |piece| piece.get_possible_moves(board).empty? }
-      # selections = pieces.map do |piece|
-      #   [piece.position.row, piece.position.col]
-      # end
+      selections = pieces_available_for_selection
 
       p selections
 
-      puts ""
-      selection = current_player.select_piece(selections)
-      position = Position.new(selection[0], selection[1])
-      piece = board.get_piece(position)
+      piece = select_piece(selections)
+      move = select_move(piece)
+      update_game_state(piece, move)
 
-      move = make_move(piece)
-      update_state_on_move(piece, move)
-
-      board.display
       switch_players!
     end
+  end
+
+  def pieces_available_for_selection
+    selections = []
+    pieces = pieces_set(current_player.color)
+    pieces.each do |piece|
+      moves = piece.get_possible_moves(board)
+      filtered_moves = filter_moves_that_does_not_remove_check(piece, moves)
+      selections << [piece.position.row, piece.position.col] unless filtered_moves.empty?
+    end
+
+    selections
   end
 
   #   Select only those moves which gets us out of check
@@ -73,7 +60,13 @@ class Game
     filtered_moves
   end
 
-  def make_move(piece)
+  def select_piece(selections)
+    selection = current_player.select_piece(selections)
+    position = Position.new(selection[0], selection[1])
+    piece = board.get_piece(position)
+  end
+
+  def select_move(piece)
     moves = piece.get_possible_moves(board)
     p moves
 
@@ -81,7 +74,7 @@ class Game
     Position.new(move[0], move[1])
   end
 
-  def update_state_on_move(piece, move)
+  def update_game_state(piece, move)
     board.delete_piece(move) if capture?(move)
 
     board.update(piece, move)
