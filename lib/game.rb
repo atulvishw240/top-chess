@@ -27,18 +27,26 @@ class Game
   end
 
   def pieces_available_for_selection
-    selections = []
     pieces = pieces_set(current_player.color)
-    pieces.each do |piece|
-      moves = piece.get_possible_moves(board)
-      filtered_moves = filter_moves_that_does_not_remove_check(piece, moves)
-      selections << [piece.position.row, piece.position.col] unless filtered_moves.empty?
+    selections = pieces.map do |piece|
+      piece_available_for_selection(piece)
     end
 
-    selections
+    selections.compact # remove nil's
   end
 
-  #   Select only those moves which gets us out of check
+  def piece_available_for_selection(piece)
+    moves = piece.get_possible_moves(board)
+    filtered_moves = filter_moves_that_does_not_remove_check(piece, moves)
+
+    if filtered_moves.empty?
+      nil
+    else
+      position = piece.position
+      [position.row, position.col]
+    end
+  end
+
   def filter_moves_that_does_not_remove_check(piece, moves)
     prev_position = piece.position
     filtered_moves = []
@@ -52,7 +60,11 @@ class Game
       end
 
       piece.position = new_position
+
+      # If move resolves check then add it to filtered moves
       filtered_moves << move unless check?
+
+      # Restore previous state for piece selected and captured piece (if there is any)
       piece.position = prev_position
       opp_piece.position = new_position if board.contains_piece?(new_position)
     end
@@ -63,7 +75,7 @@ class Game
   def select_piece(selections)
     selection = current_player.select_piece(selections)
     position = Position.new(selection[0], selection[1])
-    piece = board.get_piece(position)
+    board.get_piece(position)
   end
 
   def select_move(piece)
