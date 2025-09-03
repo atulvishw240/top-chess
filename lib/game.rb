@@ -12,11 +12,6 @@ class Game
     setup_pieces_on_board
     board.display
     loop do
-      # Get all the pieces for current player
-      # Select those pieces whose all_possible_moves set is non empty
-      # Store the coordinates of all these pieces in the selections array and pass it around
-      # Available selections for a player
-
       pieces = pieces_set(current_player.color)
       pieces.reject! { |piece| piece.get_possible_moves(board).empty? }
       selections = pieces.map do |piece|
@@ -27,24 +22,19 @@ class Game
 
       puts ""
       p check?
-      # Select a piece to make a move
       selection = current_player.select_piece(selections)
       position = Position.new(selection[0], selection[1])
       piece = board.get_piece(position)
 
-      # All possible moves for the selected piece
       moves = piece.get_possible_moves(board)
       p moves
 
-      # Select a move out of all possible moves for a piece
       move = current_player.select_move(moves)
       new_position = Position.new(move[0], move[1])
       board.delete_piece(new_position) if capture?(new_position)
 
-      # Remove piece from old position and move to a new position
       board.update(piece, new_position)
 
-      # Display updated state of board and switch players
       board.display
       switch_players!
     end
