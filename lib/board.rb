@@ -13,13 +13,16 @@ class Board
   end
 
   def display
-    board.each do |row|
+    board.each_with_index do |row, row_index|
+      print "#{8 - row_index} "
       row.each do |square|
         print square
       end
 
       puts ""
     end
+
+    puts "  a b c d e f g h"
   end
 
   def update(piece, new_position)
