@@ -12,4 +12,12 @@ module FileRankInterface
   def to_file(col_index)
     FILES[col_index]
   end
+
+  def to_row_index(rank)
+    8 - rank
+  end
+
+  def to_col_index(file)
+    FILES.index(file)
+  end
 end
