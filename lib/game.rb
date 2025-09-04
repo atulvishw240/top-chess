@@ -123,14 +123,8 @@ class Game
     pieces = pieces_set(opponent_player.color)
     moves = []
     pieces.each { |piece| moves += piece.get_possible_moves(board) }
-    puts moves
-
-    moves.delete_if { |move| move.flatten.empty? }
-
-    curr_king = king(current_player.color)
-    position = curr_king.position
-    king_coordinate = [position.row, position.col]
-    moves.include?(king_coordinate)
+    king = king(current_player.color)
+    moves.include?(king.position)
   end
 
   def capture?(position)
