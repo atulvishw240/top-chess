@@ -14,7 +14,7 @@ class Board
 
   def display
     board.each_with_index do |row, row_index|
-      print "#{rank(row_index)} "
+      print "#{8 - row_index} "
       row.each do |square|
         print square
       end
@@ -22,7 +22,7 @@ class Board
       puts ""
     end
 
-    puts "  #{files}"
+    puts "  a b c d e f g h"
   end
 
   def update(piece, new_position)
@@ -71,12 +71,4 @@ class Board
     square = get_square(position)
     square.piece = update_with
   end
-end
-
-def rank(row_index)
-  (8 - row_index).to_s
-end
-
-def files
-  "a b c d e f g h"
 end
