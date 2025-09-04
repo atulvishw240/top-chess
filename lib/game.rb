@@ -80,6 +80,7 @@ class Game
 
   def select_piece(selections)
     # selection = current_player.select_piece(selections)
+    puts "Enter the coordinates of a piece to select"
     selection = current_player.select(selections)
     selection = selection.chars
     p selection
@@ -101,6 +102,7 @@ class Game
     end
     p moves
 
+    puts "Enter the coordinates of where you would like to move your piece."
     # move = current_player.select_move(moves)
     move = current_player.select(moves)
     move = move.chars
