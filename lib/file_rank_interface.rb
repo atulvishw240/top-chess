@@ -1,0 +1,15 @@
+# Interface to convert our moves and pieces selections from the format
+# row_index, col_index to filerank (i.e e1, a2, b1, etc.)
+module FileRankInterface
+  FILES = %w[a b c d e f g h].freeze
+
+  private
+
+  def rank(row_index)
+    8 - row_index
+  end
+
+  def file(col_index)
+    FILES[col_index]
+  end
+end
