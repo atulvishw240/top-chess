@@ -1,6 +1,9 @@
+require_relative "file_rank_interface"
 # Contains Game Logic
 class Game
   attr_reader :board, :current_player_id
+
+  include FileRankInterface
 
   def initialize(board, player1, player2)
     @board = board
@@ -43,7 +46,10 @@ class Game
       nil
     else
       position = piece.position
-      [position.row, position.col]
+      rank = to_rank(position.row)
+      file = to_file(position.col)
+      "#{file}#{rank}"
+      # [position.row, position.col]
     end
   end
 
@@ -73,17 +79,36 @@ class Game
   end
 
   def select_piece(selections)
-    selection = current_player.select_piece(selections)
-    position = Position.new(selection[0], selection[1])
+    # selection = current_player.select_piece(selections)
+    selection = current_player.select(selections)
+    selection = selection.chars
+    p selection
+    row = to_row_index(selection[1].to_i)
+    p selection[1]
+    col = to_col_index(selection[0])
+
+    position = Position.new(row, col)
+    p position
     board.get_piece(position)
   end
 
   def select_move(piece)
     moves = piece.get_possible_moves(board)
+    moves.map! do |move|
+      rank = to_rank(move[0])
+      file = to_file(move[1])
+      "#{file}#{rank}"
+    end
     p moves
 
-    move = current_player.select_move(moves)
-    Position.new(move[0], move[1])
+    # move = current_player.select_move(moves)
+    move = current_player.select(moves)
+    move = move.chars
+    row = to_row_index(move[1].to_i)
+    col = to_col_index(move[0])
+
+    Position.new(row, col)
+    # Position.new(move[0], move[1])
   end
 
   def update_game_state(piece, move)
