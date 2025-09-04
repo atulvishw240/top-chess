@@ -22,7 +22,13 @@ class Game
       p selections
 
       piece = select_piece(selections)
-      move = select_move(piece)
+
+      moves = piece.get_possible_moves(board)
+      moves.map!(&:to_standard)
+
+      p moves
+
+      move = select_move(moves)
       update_game_state(piece, move)
 
       switch_players!
@@ -46,10 +52,7 @@ class Game
       nil
     else
       position = piece.position
-      rank = to_rank(position.row)
-      file = to_file(position.col)
-      "#{file}#{rank}"
-      # [position.row, position.col]
+      position.to_standard
     end
   end
 
@@ -57,60 +60,37 @@ class Game
     prev_position = piece.position
     filtered_moves = []
     moves.each do |move|
-      new_position = Position.new(move[0], move[1])
       # If this new_position contains piece then
       # Set the coordinate of this piece to -1, -1 (imaginary)
-      if board.contains_piece?(new_position)
-        opp_piece = board.get_piece(new_position)
+      if board.contains_piece?(move)
+        opp_piece = board.get_piece(move)
         opp_piece.position = Position.new(-1, -1)
       end
 
-      piece.position = new_position
+      piece.position = move
 
       # If move resolves check then add it to filtered moves
       filtered_moves << move unless check?
 
       # Restore previous state for piece selected and captured piece (if there is any)
       piece.position = prev_position
-      opp_piece.position = new_position if board.contains_piece?(new_position)
+      opp_piece.position = move if board.contains_piece?(move)
     end
 
     filtered_moves
   end
 
   def select_piece(selections)
-    # selection = current_player.select_piece(selections)
-    puts "Enter the coordinates of a piece to select"
+    puts "Enter the coordinates of a piece which you want to select."
     selection = current_player.select(selections)
-    selection = selection.chars
-    p selection
-    row = to_row_index(selection[1].to_i)
-    p selection[1]
-    col = to_col_index(selection[0])
-
-    position = Position.new(row, col)
-    p position
+    position = to_position_object(selection)
     board.get_piece(position)
   end
 
-  def select_move(piece)
-    moves = piece.get_possible_moves(board)
-    moves.map! do |move|
-      rank = to_rank(move[0])
-      file = to_file(move[1])
-      "#{file}#{rank}"
-    end
-    p moves
-
-    puts "Enter the coordinates of where you would like to move your piece."
-    # move = current_player.select_move(moves)
+  def select_move(moves)
+    puts "Enter the coordinates where you would like to move your piece."
     move = current_player.select(moves)
-    move = move.chars
-    row = to_row_index(move[1].to_i)
-    col = to_col_index(move[0])
-
-    Position.new(row, col)
-    # Position.new(move[0], move[1])
+    to_position_object(move)
   end
 
   def update_game_state(piece, move)
@@ -172,4 +152,13 @@ class Game
 
     pieces
   end
+end
+
+# Convert d1 to Position.new(1, 4)
+def to_position_object(standard_form)
+  coordinates = standard_form.chars
+  row = to_row_index(coordinates[1].to_i)
+  col = to_col_index(coordinates[0])
+
+  Position.new(row, col)
 end
