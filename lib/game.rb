@@ -123,6 +123,7 @@ class Game
     pieces = pieces_set(opponent_player.color)
     moves = []
     pieces.each { |piece| moves += piece.get_possible_moves(board) }
+    puts moves
 
     moves.delete_if { |move| move.flatten.empty? }
 

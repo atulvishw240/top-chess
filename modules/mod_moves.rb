@@ -22,15 +22,13 @@ module Moves
     position = Position.new(row_index, col_index)
 
     while position.valid?
-      move = [row_index, col_index]
-
       if board.contains_piece?(position)
         piece = board.get_piece(position)
-        moves << move unless piece.color == color
+        moves << position unless piece.color == color
         break
       end
 
-      moves << move
+      moves << position
 
       row_index += dir[0]
       col_index += dir[1]

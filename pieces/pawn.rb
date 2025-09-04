@@ -34,7 +34,7 @@ class Pawn < Piece
 
     while counter <= steps
       row_index = forward(row_index)
-      move = [row_index, col_index]
+      move = Position.new(row_index, col_index)
       moves << move
 
       counter += 1

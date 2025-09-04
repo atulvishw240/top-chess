@@ -10,7 +10,6 @@ module Move
   def calculate_move(board, dir)
     row_index = position.row + dir[0]
     col_index = position.col + dir[1]
-    move = [row_index, col_index]
 
     position = Position.new(row_index, col_index)
 
@@ -21,6 +20,6 @@ module Move
       return if piece.color == color
     end
 
-    move
+    position
   end
 end
