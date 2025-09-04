@@ -5,11 +5,11 @@ module FileRankInterface
 
   private
 
-  def rank(row_index)
+  def to_rank(row_index)
     8 - row_index
   end
 
-  def file(col_index)
+  def to_file(col_index)
     FILES[col_index]
   end
 end
