@@ -1,4 +1,4 @@
-require_relative "file_rank_interface"
+require_relative 'file_rank_interface'
 # Contains Game Logic
 class Game
   attr_reader :board, :current_player_id
@@ -18,6 +18,7 @@ class Game
       p check?
 
       selections = pieces_available_for_selection
+      break if selections.empty?
 
       p selections
 
@@ -33,6 +34,8 @@ class Game
 
       switch_players!
     end
+
+    puts "The #{opponent_player.name} won the game!!"
   end
 
   def pieces_available_for_selection
@@ -45,8 +48,7 @@ class Game
   end
 
   def piece_available_for_selection(piece)
-    moves = piece.get_possible_moves(board)
-    filtered_moves = filter_moves_that_does_not_remove_check(piece, moves)
+    filtered_moves = filter_moves_that_does_not_remove_check(piece)
 
     if filtered_moves.empty?
       nil
@@ -56,39 +58,45 @@ class Game
     end
   end
 
-  def filter_moves_that_does_not_remove_check(piece, moves)
-    prev_position = piece.position
+  def filter_moves_that_does_not_remove_check(piece)
     filtered_moves = []
+    prev_position = piece.position
+    moves = piece.get_possible_moves(board)
     moves.each do |move|
-      # If this new_position contains piece then
-      # Set the coordinate of this piece to -1, -1 (imaginary)
       if board.contains_piece?(move)
+        # Delete opponent piece
         opp_piece = board.get_piece(move)
-        opp_piece.position = Position.new(-1, -1)
+        board.delete_piece(move)
+
+        # Move our piece to its position
+        piece.position = move
+
+        # Does this resolves check?
+        filtered_moves << move unless check?
+
+        # Restore state
+        board.add_piece(opp_piece, move)
+        piece.position = prev_position
+      else
+        piece.position = move
+        filtered_moves << move unless check?
+
+        piece.position = prev_position
       end
-
-      piece.position = move
-
-      # If move resolves check then add it to filtered moves
-      filtered_moves << move unless check?
-
-      # Restore previous state for piece selected and captured piece (if there is any)
-      piece.position = prev_position
-      opp_piece.position = move if board.contains_piece?(move)
     end
 
     filtered_moves
   end
 
   def select_piece(selections)
-    puts "Enter the coordinates of a piece which you want to select."
+    puts 'Enter the coordinates of a piece which you want to select.'
     selection = current_player.select(selections)
     position = to_position_object(selection)
     board.get_piece(position)
   end
 
   def select_move(moves)
-    puts "Enter the coordinates where you would like to move your piece."
+    puts 'Enter the coordinates where you would like to move your piece.'
     move = current_player.select(moves)
     to_position_object(move)
   end
@@ -104,7 +112,11 @@ class Game
     moves = []
     pieces.each { |piece| moves += piece.get_possible_moves(board) }
     king = king(current_player.color)
-    moves.include?(king.position)
+    pos = king.position
+    # moves.include?(king.position)
+    moves.any? do |move|
+      move.row == pos.row && move.col == pos.col
+    end
   end
 
   def capture?(position)

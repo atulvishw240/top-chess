@@ -1,5 +1,5 @@
-require_relative "square"
-require_relative "../modules/constants"
+require_relative 'square'
+require_relative '../modules/constants'
 # Handle Game Effect on Board
 class Board
   include Constants
@@ -19,10 +19,10 @@ class Board
         print square
       end
 
-      puts ""
+      puts ''
     end
 
-    puts "  a b c d e f g h"
+    puts '  a b c d e f g h'
   end
 
   def update(piece, new_position)
@@ -40,6 +40,12 @@ class Board
   def get_piece(position)
     square = get_square(position)
     square.piece
+  end
+
+  def add_piece(piece, position)
+    piece.position = position
+    pieces << piece
+    update(piece, position)
   end
 
   def delete_piece(position)
