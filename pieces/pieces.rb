@@ -13,18 +13,31 @@ class Pieces
   attr_accessor :pieces
 
   def initialize(color)
-    @pieces = create_pieces(color)
+    @pieces = create_set_of_pieces(color)
+  end
+
+  def create_set_of_pieces(color)
+    pieces_set = []
+
+    pieces_set += create_pawns(color)
+    pieces_set += create_pieces(color)
+
+    pieces_set
+  end
+
+  def create_pawns(color)
+    pawns = []
+    pawn_row = color == BLACK_FOREGROUND ? 1 : 6
+    (0..7).each do |col|
+      pawns << Pawn.new(color, Position.new(pawn_row, col))
+    end
+
+    pawns
   end
 
   def create_pieces(color) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-    # Create Pawns
     pieces = []
-    pawn_row = color == BLACK_FOREGROUND ? 1 : 6
-    (0..7).each do |col|
-      pieces << Pawn.new(color, Position.new(pawn_row, col))
-    end
 
-    # Create Pieces
     piece_row = color == BLACK_FOREGROUND ? 0 : 7
     pieces << Rook.new(color, Position.new(piece_row, 0))
     pieces << Rook.new(color, Position.new(piece_row, 7))
