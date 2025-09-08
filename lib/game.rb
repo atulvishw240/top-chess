@@ -18,7 +18,7 @@ class Game
       p check?
 
       selections = pieces_available_for_selection
-      break if selections.empty?
+      break if checkmate?
 
       p selections
 
@@ -117,6 +117,14 @@ class Game
     moves.any? do |move|
       move.row == pos.row && move.col == pos.col
     end
+  end
+
+  def checkmate?
+    check? && pieces_available_for_selection.empty?
+  end
+
+  def stalemate?
+    pieces_available_for_selection.empty?
   end
 
   def capture?(position)
