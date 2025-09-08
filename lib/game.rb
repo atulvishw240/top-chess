@@ -120,8 +120,6 @@ class Game
   end
 
   def checkmate?
-    p check?
-    p pieces_available_for_selection
     check? && pieces_available_for_selection.empty?
   end
 
