@@ -9,7 +9,7 @@ describe Bishop do
   end
 
   before(:each) do
-    @pieces = Pieces.new('Black')
+    @pieces = Pieces.new('Black', 'Brown')
     @board = Board.new(@pieces)
   end
 

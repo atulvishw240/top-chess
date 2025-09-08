@@ -4,10 +4,11 @@ require_relative '../pieces/bishop'
 require_relative '../pieces/pieces'
 
 BLACK_FOREGROUND = "\e[30m".freeze
+BROWN_FOREGROUND = "\e[38;5;160m".freeze
 describe Board do
   before(:each) do
-    @pieces = Pieces.new(BLACK_FOREGROUND)
-    @board = Board.new(@pieces.pieces)
+    @pieces = Pieces.new(BLACK_FOREGROUND, BROWN_FOREGROUND)
+    @board = Board.new(@pieces.all_pieces)
   end
 
   describe '#get_piece(position)' do
