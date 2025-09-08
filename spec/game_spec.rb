@@ -126,4 +126,20 @@ describe Game do
       expect(game.checkmate?).to eq(false)
     end
   end
+
+  describe '#stalemate' do
+    it "returns true if king isn't in check and there are no possible moves" do
+      king = King.new(Constants::BLACK_FOREGROUND, Position.new(0, 0))
+      queen = Queen.new(Constants::BROWN_FOREGROUND, Position.new(2, 1))
+      pieces = [king, queen]
+      board = Board.new(pieces)
+      player1 = double('Atul', color: Constants::BLACK_FOREGROUND)
+      player2 = double('Gaurav', color: Constants::BROWN_FOREGROUND)
+      game = Game.new(board, player1, player2)
+      allow(game).to receive(:current_player) { player1 }
+      allow(game).to receive(:opponent_player) { player2 }
+
+      expect(game.stalemate?).to eq(true)
+    end
+  end
 end
