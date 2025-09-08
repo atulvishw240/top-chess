@@ -1,5 +1,5 @@
-require_relative "piece"
-require_relative "../modules/mod_moves"
+require_relative 'piece'
+require_relative '../modules/mod_moves'
 # Represents Bishop in Our Game
 class Bishop < Piece
   include Moves

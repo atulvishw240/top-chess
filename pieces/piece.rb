@@ -1,5 +1,5 @@
-require_relative "../lib/position"
-require_relative "../modules/constants"
+require_relative '../lib/position'
+require_relative '../modules/constants'
 # Implements our Piece
 class Piece
   include Constants
@@ -14,11 +14,11 @@ class Piece
   end
 
   def unicode
-    raise NotImplementedError, "All Pieces must implement unicode"
+    raise NotImplementedError, 'All Pieces must implement unicode'
   end
 
   def get_possible_moves(board)
-    raise NotImplementedError, "All Pieces must implement get_possible_moves"
+    raise NotImplementedError, 'All Pieces must implement get_possible_moves'
   end
 
   def to_s

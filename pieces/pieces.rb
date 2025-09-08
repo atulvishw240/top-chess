@@ -1,11 +1,11 @@
-require_relative "rook"
-require_relative "knight"
-require_relative "bishop"
-require_relative "queen"
-require_relative "king"
-require_relative "pawn"
-require_relative "../lib/position"
-require_relative "../modules/constants"
+require_relative 'rook'
+require_relative 'knight'
+require_relative 'bishop'
+require_relative 'queen'
+require_relative 'king'
+require_relative 'pawn'
+require_relative '../lib/position'
+require_relative '../modules/constants'
 # Reperesents Pieces which contains "Piece" objects
 class Pieces
   include Constants
@@ -20,7 +20,7 @@ class Pieces
     # Create Pawns
     pieces = []
     pawn_row = color == BLACK_FOREGROUND ? 1 : 6
-    (0..7).each do |col| # rubocop:disable Style/MapIntoArray
+    (0..7).each do |col|
       pieces << Pawn.new(color, Position.new(pawn_row, col))
     end
 

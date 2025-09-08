@@ -1,11 +1,11 @@
-require_relative "piece"
+require_relative 'piece'
 # Represents Pawn in our Game
 class Pawn < Piece
   def unicode
     "\u{265F}"
   end
 
-  def get_possible_moves(board)
+  def get_possible_moves(_board)
     # Captures functionality is left for later
     row_index = position.row
     col_index = position.col

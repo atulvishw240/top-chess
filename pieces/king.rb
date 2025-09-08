@@ -1,5 +1,5 @@
-require_relative "piece"
-require_relative "../modules/mod_move"
+require_relative 'piece'
+require_relative '../modules/mod_move'
 # Represents King
 class King < Piece
   include Move

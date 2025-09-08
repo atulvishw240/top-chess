@@ -1,4 +1,4 @@
-require_relative "../modules/constants"
+require_relative '../modules/constants'
 # Board is made up of squares
 class Square
   include Constants

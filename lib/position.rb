@@ -1,4 +1,4 @@
-require_relative "file_rank_interface"
+require_relative 'file_rank_interface'
 # Value Object i.e. meant to be pass around in our application
 class Position
   include FileRankInterface

@@ -5,5 +5,5 @@ module Constants
   CYAN_BACKGROUND = "\e[48;5;45m".freeze
   BLACK_FOREGROUND = "\e[30m".freeze
   BROWN_FOREGROUND = "\e[38;5;160m".freeze
-  EMPTY = "  ".freeze
+  EMPTY = '  '.freeze
 end
