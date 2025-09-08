@@ -43,18 +43,21 @@ class Board
   end
 
   def add_piece(piece, position)
-    piece.position = position
-    pieces << piece
+    pieces.add_piece(piece, position)
     update(piece, position)
   end
 
   def delete_piece(position)
-    pieces.each do |piece|
-      next unless position == piece.position
+    pieces.delete_piece(position)
+    update_square(EMPTY, position)
+  end
 
-      update_square(EMPTY, piece.position)
-      pieces.delete(piece)
-    end
+  def pieces_set(color)
+    pieces.set(color)
+  end
+
+  def king(color)
+    pieces.king(color)
   end
 
   # --------------  PRIVATE METHODS  -------------------

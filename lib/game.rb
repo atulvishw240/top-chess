@@ -39,7 +39,7 @@ class Game
   end
 
   def pieces_available_for_selection
-    pieces = pieces_set(current_player.color)
+    pieces = board.pieces_set(current_player.color)
     selections = pieces.map do |piece|
       piece_available_for_selection(piece)
     end
@@ -108,12 +108,11 @@ class Game
   end
 
   def check?
-    pieces = pieces_set(opponent_player.color)
+    pieces = board.pieces_set(opponent_player.color)
     moves = []
     pieces.each { |piece| moves += piece.get_possible_moves(board) }
-    king = king(current_player.color)
+    king = board.king(current_player.color)
     pos = king.position
-    # moves.include?(king.position)
     moves.any? do |move|
       move.row == pos.row && move.col == pos.col
     end
@@ -149,36 +148,17 @@ class Game
   end
 
   def setup_pieces_on_board
-    board.pieces.each do |piece|
+    board.pieces.all_pieces.each do |piece|
       board.update(piece, piece.position)
     end
   end
 
-  def king(color)
-    board.pieces.each do |piece|
-      return piece if same_color?(piece, color) && piece.is_a?(King)
-    end
+  # Convert d1 to Position.new(1, 4)
+  def to_position_object(standard_form)
+    coordinates = standard_form.chars
+    row = to_row_index(coordinates[1].to_i)
+    col = to_col_index(coordinates[0])
+
+    Position.new(row, col)
   end
-
-  def same_color?(piece, color)
-    piece.color == color
-  end
-
-  def pieces_set(color)
-    pieces = []
-    board.pieces.each do |piece|
-      pieces << piece if same_color?(piece, color)
-    end
-
-    pieces
-  end
-end
-
-# Convert d1 to Position.new(1, 4)
-def to_position_object(standard_form)
-  coordinates = standard_form.chars
-  row = to_row_index(coordinates[1].to_i)
-  col = to_col_index(coordinates[0])
-
-  Position.new(row, col)
 end
