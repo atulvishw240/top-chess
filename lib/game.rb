@@ -41,21 +41,18 @@ class Game
   def pieces_available_for_selection
     pieces = board.pieces_set(current_player.color)
     selections = pieces.map do |piece|
-      piece_available_for_selection(piece)
+      # piece_available_for_selection(piece)
+      filtered_moves = filter_moves_that_does_not_remove_check(piece)
+
+      if filtered_moves.empty?
+        nil
+      else
+        position = piece.position
+        position.to_standard
+      end
     end
 
     selections.compact # remove nil's
-  end
-
-  def piece_available_for_selection(piece)
-    filtered_moves = filter_moves_that_does_not_remove_check(piece)
-
-    if filtered_moves.empty?
-      nil
-    else
-      position = piece.position
-      position.to_standard
-    end
   end
 
   def filter_moves_that_does_not_remove_check(piece)
