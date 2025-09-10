@@ -39,50 +39,44 @@ class Game
   end
 
   def pieces_available_for_selection
-    pieces = board.pieces_set(current_player.color)
-    selections = pieces.map do |piece|
-      # piece_available_for_selection(piece)
-      filtered_moves = filter_moves_that_does_not_remove_check(piece)
-
-      if filtered_moves.empty?
-        nil
-      else
-        position = piece.position
-        position.to_standard
-      end
+    selections = []
+    pieces = pieces_set(current_player.color)
+    pieces.each do |piece|
+      moves = all_possible_moves(piece)
+      selections << piece unless moves.empty?
     end
 
-    selections.compact # remove nil's
+    to_standard_form(selections)
   end
 
-  def filter_moves_that_does_not_remove_check(piece)
-    filtered_moves = []
-    prev_position = piece.position
+  def all_possible_moves(piece)
     moves = piece.get_possible_moves(board)
+    moves = filter_moves_that_does_not_remove_check(piece, moves) if check?
+
+    moves
+  end
+
+  def filter_moves_that_does_not_remove_check(piece, moves)
+    prev_position = piece.position
+    filtered_moves = []
     moves.each do |move|
-      if board.contains_piece?(move)
-        # Delete opponent piece
-        opp_piece = board.get_piece(move)
-        board.delete_piece(move)
+      next unless board.contains_piece?(move)
 
-        # Move our piece to its position
-        piece.position = move
+      # Create a deep copy of Game object
+      copy_game = Marshal.load(Marshal.dump(self))
+      copy_board = copy_game.board
+      copy_board.delete_piece(move) if copy_board.contains_piece?(move)
 
-        # Does this resolves check?
-        filtered_moves << move unless check?
-
-        # Restore state
-        board.add_piece(opp_piece, move)
-        piece.position = prev_position
-      else
-        piece.position = move
-        filtered_moves << move unless check?
-
-        piece.position = prev_position
-      end
+      copy_piece = copy_board.get_piece(prev_position)
+      copy_piece.position = move
+      filtered_moves << move unless copy_game.check?
     end
 
     filtered_moves
+  end
+
+  def to_standard_form(pieces)
+    pieces.map { |piece| piece.position.to_standard }
   end
 
   def select_piece(selections)
@@ -105,10 +99,10 @@ class Game
   end
 
   def check?
-    pieces = board.pieces_set(opponent_player.color)
+    pieces = pieces_set(opponent_player.color)
     moves = []
     pieces.each { |piece| moves += piece.get_possible_moves(board) }
-    king = board.king(current_player.color)
+    king = king(current_player.color)
     pos = king.position
     moves.any? do |move|
       move.row == pos.row && move.col == pos.col
@@ -144,8 +138,23 @@ class Game
     @current_player_id = 1 - @current_player_id
   end
 
+  def pieces_set(color)
+    pieces = []
+    board.pieces.each do |piece|
+      pieces << piece if piece.color == color
+    end
+
+    pieces
+  end
+
+  def king(color)
+    board.pieces.each do |piece|
+      return piece if piece.color == color && piece.is_a?(King)
+    end
+  end
+
   def setup_pieces_on_board
-    board.pieces.all_pieces.each do |piece|
+    board.pieces.each do |piece|
       board.update(piece, piece.position)
     end
   end

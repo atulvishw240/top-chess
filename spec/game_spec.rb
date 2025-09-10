@@ -11,10 +11,7 @@ describe Game do
     it 'returns true if current player is in check' do
       king = King.new(Constants::BLACK_FOREGROUND, Position.new(3, 3))
       queen = Queen.new(Constants::BROWN_FOREGROUND, Position.new(7, 3))
-      pieces = Pieces.new("\e[30m", "\e[41m")
-      pieces.add_piece(king, king.position)
-      pieces.add_piece(queen, queen.position)
-      # pieces = [king, queen]
+      pieces = [king, queen]
       board = Board.new(pieces)
       player1 = double('Atul', color: Constants::BLACK_FOREGROUND)
       player2 = double('Gaurav', color: Constants::BROWN_FOREGROUND)

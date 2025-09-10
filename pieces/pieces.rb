@@ -16,7 +16,6 @@ class Pieces
   def initialize(dark, light)
     @dark = dark
     @light = light
-    # @all_pieces = dark_set + light_set
     @all_pieces = create_set_of_pieces(dark) + create_set_of_pieces(light)
   end
 
@@ -53,33 +52,5 @@ class Pieces
     pieces << King.new(color, Position.new(piece_row, 4))
 
     pieces
-  end
-
-  def set(color)
-    pieces = []
-    all_pieces.each do |piece|
-      pieces << piece if piece.color == color
-    end
-
-    pieces
-  end
-
-  def king(color)
-    all_pieces.each do |piece|
-      return piece if piece.color == color && piece.is_a?(King)
-    end
-  end
-
-  def delete_piece(position)
-    all_pieces.each do |piece|
-      next unless position == piece.position
-
-      all_pieces.delete(piece)
-    end
-  end
-
-  def add_piece(piece, position)
-    piece.position = position
-    all_pieces << piece
   end
 end
