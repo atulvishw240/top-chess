@@ -40,13 +40,13 @@ class Game
 
   def pieces_available_for_selection
     selections = []
-    pieces = pieces_set(current_player.color)
+    pieces = pieces_set(current_player)
     pieces.each do |piece|
       moves = all_possible_moves(piece)
-      selections << piece unless moves.empty?
+      selections << piece.position.to_standard unless moves.empty?
     end
 
-    to_standard_form(selections)
+    selections
   end
 
   def all_possible_moves(piece)
@@ -75,10 +75,6 @@ class Game
     filtered_moves
   end
 
-  def to_standard_form(pieces)
-    pieces.map { |piece| piece.position.to_standard }
-  end
-
   def select_piece(selections)
     puts 'Enter the coordinates of a piece which you want to select.'
     selection = current_player.select(selections)
@@ -99,14 +95,11 @@ class Game
   end
 
   def check?
-    pieces = pieces_set(opponent_player.color)
+    pieces = pieces_set(opponent_player)
     moves = []
     pieces.each { |piece| moves += piece.get_possible_moves(board) }
-    king = king(current_player.color)
-    pos = king.position
-    moves.any? do |move|
-      move.row == pos.row && move.col == pos.col
-    end
+    king = king(current_player)
+    moves.any? { |move| move == king.position }
   end
 
   def checkmate?
@@ -138,18 +131,18 @@ class Game
     @current_player_id = 1 - @current_player_id
   end
 
-  def pieces_set(color)
+  def pieces_set(player)
     pieces = []
     board.pieces.each do |piece|
-      pieces << piece if piece.color == color
+      pieces << piece if piece.color == player.color
     end
 
     pieces
   end
 
-  def king(color)
+  def king(player)
     board.pieces.each do |piece|
-      return piece if piece.color == color && piece.is_a?(King)
+      return piece if piece.color == player.color && piece.is_a?(King)
     end
   end
 
