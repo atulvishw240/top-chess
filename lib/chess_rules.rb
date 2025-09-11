@@ -1,3 +1,3 @@
 # Contains game logic for our chess
-class GameLogic
+class ChessRules
 end
