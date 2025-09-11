@@ -19,7 +19,7 @@ class Game
       board.display
       p check?
 
-      selections = pieces_available_for_selection
+      selections = pieces_available_for_selection(current_player.color)
       break if checkmate?
 
       p selections
@@ -40,9 +40,9 @@ class Game
     puts "The #{opponent_player.name} won the game!!"
   end
 
-  def pieces_available_for_selection
+  def pieces_available_for_selection(color)
     selections = []
-    pieces = board.pieces_set(current_player.color)
+    pieces = board.pieces_set(color)
     pieces.each do |piece|
       moves = all_possible_moves(piece)
       selections << piece.position.to_standard unless moves.empty?
