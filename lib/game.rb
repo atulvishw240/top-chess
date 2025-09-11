@@ -1,9 +1,11 @@
+require_relative '../modules/constants'
 require_relative 'file_rank_interface'
 # Contains Game Logic
 class Game
   attr_reader :board, :current_player_id
 
   include FileRankInterface
+  include Constants
 
   def initialize(board, player1, player2)
     @board = board
@@ -40,7 +42,7 @@ class Game
 
   def pieces_available_for_selection
     selections = []
-    pieces = pieces_set(current_player)
+    pieces = board.pieces_set(current_player.color)
     pieces.each do |piece|
       moves = all_possible_moves(piece)
       selections << piece.position.to_standard unless moves.empty?
@@ -95,10 +97,10 @@ class Game
   end
 
   def check?
-    pieces = pieces_set(opponent_player)
+    pieces = board.pieces_set(opponent_player.color)
     moves = []
     pieces.each { |piece| moves += piece.get_possible_moves(board) }
-    king = king(current_player)
+    king = board.king(current_player.color)
     moves.any? { |move| move == king.position }
   end
 
@@ -129,21 +131,6 @@ class Game
 
   def switch_players!
     @current_player_id = 1 - @current_player_id
-  end
-
-  def pieces_set(player)
-    pieces = []
-    board.pieces.each do |piece|
-      pieces << piece if piece.color == player.color
-    end
-
-    pieces
-  end
-
-  def king(player)
-    board.pieces.each do |piece|
-      return piece if piece.color == player.color && piece.is_a?(King)
-    end
   end
 
   def setup_pieces_on_board
