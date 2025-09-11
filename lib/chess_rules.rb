@@ -19,7 +19,7 @@ class ChessRules
 
   def all_legal_moves(board, color, piece)
     moves = piece.get_possible_moves(board)
-    moves = filter_moves_for_check(board, piece, moves) if check?(board, color)
+    moves = filter_moves_for_check(board, piece) if check?(board, color)
 
     moves
   end
@@ -45,6 +45,10 @@ class ChessRules
     pieces.each { |piece| moves += piece.get_possible_moves(board) }
     king = board.king(color)
     moves.any? { |move| move == king.position }
+  end
+
+  def checkmate?(board, color)
+    check?(board, color) && pieces_available_for_selection(board, color).empty?
   end
 
   def opponent_color(color)

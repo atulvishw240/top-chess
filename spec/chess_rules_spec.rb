@@ -52,4 +52,44 @@ describe ChessRules do
       expect(rules.filter_moves_for_check(board, king)).to eq(%w[d8 f8 d7 f7])
     end
   end
+
+  describe '#checkmate' do
+    it 'returns true when black king gets checkmated by two brown rooks' do
+      king = King.new(Constants::BLACK_FOREGROUND, Position.new(0, 0))
+      rook = Rook.new(Constants::BROWN_FOREGROUND, Position.new(0, 5))
+      rook2 = Rook.new(Constants::BROWN_FOREGROUND, Position.new(1, 5))
+      board = Board.new([king], [rook, rook2])
+      rules = ChessRules.new
+      expect(rules.checkmate?(board, Constants::BLACK_FOREGROUND)).to eq(true)
+    end
+
+    it 'returns true when black king gets checkmated by one queen and bishop' do
+      king = King.new(Constants::BLACK_FOREGROUND, Position.new(0, 0))
+      queen = Queen.new(Constants::BROWN_FOREGROUND, Position.new(1, 1))
+      bishop = Bishop.new(Constants::BROWN_FOREGROUND, Position.new(6, 6))
+      board = Board.new([king], [queen, bishop])
+      rules = ChessRules.new
+      expect(rules.checkmate?(board, Constants::BLACK_FOREGROUND)).to eq(true)
+    end
+
+    it 'returns true when black king gets checkmated by two knight and king' do
+      black_king = King.new(Constants::BLACK_FOREGROUND, Position.new(0, 0))
+      knight = Knight.new(Constants::BROWN_FOREGROUND, Position.new(2, 1))
+      knight2 = Knight.new(Constants::BROWN_FOREGROUND, Position.new(2, 2))
+      brown_king = King.new(Constants::BROWN_FOREGROUND, Position.new(2, 0))
+      board = Board.new([black_king], [knight, knight2, brown_king])
+      rules = ChessRules.new
+      expect(rules.checkmate?(board, Constants::BLACK_FOREGROUND)).to eq(true)
+    end
+
+    it 'returns true when black king gets checkmated by two brown bishops and brown king' do
+      black_king = King.new(Constants::BLACK_FOREGROUND, Position.new(0, 0))
+      bishop = Bishop.new(Constants::BROWN_FOREGROUND, Position.new(7, 7))
+      bishop2 = Bishop.new(Constants::BROWN_FOREGROUND, Position.new(6, 7))
+      brown_king = King.new(Constants::BROWN_FOREGROUND, Position.new(2, 0))
+      board = Board.new([black_king], [bishop, bishop2, brown_king])
+      rules = ChessRules.new
+      expect(rules.checkmate?(board, Constants::BLACK_FOREGROUND)).to eq(true)
+    end
+  end
 end
