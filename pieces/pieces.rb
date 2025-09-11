@@ -10,13 +10,10 @@ require_relative '../modules/constants'
 class Pieces
   include Constants
 
-  private attr_reader :dark, :light
-  attr_accessor :all_pieces
+  attr_accessor :pieces
 
-  def initialize(dark, light)
-    @dark = dark
-    @light = light
-    @all_pieces = create_set_of_pieces(dark) + create_set_of_pieces(light)
+  def initialize(color)
+    @pieces = create_set_of_pieces(color)
   end
 
   def create_set_of_pieces(color)
@@ -30,7 +27,7 @@ class Pieces
 
   def create_pawns(color)
     pawns = []
-    pawn_row = color == dark ? 1 : 6
+    pawn_row = color == BLACK_FOREGROUND ? 1 : 6
     (0..7).each do |col|
       pawns << Pawn.new(color, Position.new(pawn_row, col))
     end
@@ -41,7 +38,7 @@ class Pieces
   def create_pieces(color) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     pieces = []
 
-    piece_row = color == dark ? 0 : 7
+    piece_row = color == Constants::BLACK_FOREGROUND ? 0 : 7
     pieces << Rook.new(color, Position.new(piece_row, 0))
     pieces << Rook.new(color, Position.new(piece_row, 7))
     pieces << Knight.new(color, Position.new(piece_row, 1))

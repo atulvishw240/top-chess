@@ -147,7 +147,11 @@ class Game
   end
 
   def setup_pieces_on_board
-    board.pieces.each do |piece|
+    board.dark_pieces.each do |piece|
+      board.update(piece, piece.position)
+    end
+
+    board.light_pieces.each do |piece|
       board.update(piece, piece.position)
     end
   end

@@ -4,11 +4,12 @@ require_relative '../modules/constants'
 class Board
   include Constants
 
-  attr_accessor :board, :pieces
+  attr_accessor :board, :dark_pieces, :light_pieces
 
-  def initialize(pieces)
+  def initialize(dark, light)
     @board = Array.new(8) { Array.new(8) { Square.new } }
-    @pieces = pieces
+    @dark_pieces = dark
+    @light_pieces = light
     assign_color_to_squares
   end
 
