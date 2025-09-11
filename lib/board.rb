@@ -50,13 +50,27 @@ class Board
   end
 
   def delete_piece(position)
-    pieces.each do |piece|
-      next unless position == piece.position
-
-      pieces.delete(piece)
-    end
+    piece = get_piece(position)
+    color = piece.color
+    pieces = pieces_set(color)
+    pieces.delete(piece)
 
     update_square(EMPTY, position)
+  end
+
+  def pieces_set(color)
+    if color == BLACK_FOREGROUND
+      dark_pieces
+    else
+      light_pieces
+    end
+  end
+
+  def king(color)
+    pieces = pieces_set(color)
+    pieces.each do |piece|
+      return piece if piece.color == color && piece.is_a?(King)
+    end
   end
 
   # --------------  PRIVATE METHODS  -------------------
