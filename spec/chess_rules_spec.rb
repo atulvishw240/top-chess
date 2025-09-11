@@ -42,4 +42,14 @@ describe ChessRules do
       expect(rules.check?(board, Constants::BLACK_FOREGROUND)).to eq(true)
     end
   end
+
+  describe '#filter_moves_for_check' do
+    it 'limit black king moves when its in check by brown queen' do
+      king = King.new(Constants::BLACK_FOREGROUND, Position.new(0, 4))
+      rook = Rook.new(Constants::BROWN_FOREGROUND, Position.new(7, 4))
+      board = Board.new([king], [rook])
+      rules = ChessRules.new
+      expect(rules.filter_moves_for_check(board, king)).to eq(%w[d8 f8 d7 f7])
+    end
+  end
 end

@@ -11,6 +11,7 @@ class Board
     @dark_pieces = dark
     @light_pieces = light
     assign_color_to_squares
+    setup_pieces_on_board
   end
 
   def display
@@ -92,5 +93,15 @@ class Board
   def update_square(update_with, position)
     square = get_square(position)
     square.piece = update_with
+  end
+
+  def setup_pieces_on_board
+    dark_pieces.each do |piece|
+      update(piece, piece.position)
+    end
+
+    light_pieces.each do |piece|
+      update(piece, piece.position)
+    end
   end
 end

@@ -10,9 +10,7 @@ describe Rook do
   end
 
   before(:each) do
-    @black = Pieces.new('Black')
-    @brown = Pieces.new('Brown')
-    @board = Board.new(@black.pieces, @brown.pieces)
+    @board = Board.new([], [])
   end
 
   describe '#get_possible_moves' do

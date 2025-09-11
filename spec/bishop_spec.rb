@@ -2,6 +2,8 @@ require_relative '../lib/position'
 require_relative '../lib/board'
 require_relative '../pieces/bishop'
 require_relative '../pieces/pieces'
+require_relative '../pieces/bishop'
+require_relative '../pieces/king'
 
 describe Bishop do
   def get_pos(row_index, col_index)
@@ -9,9 +11,7 @@ describe Bishop do
   end
 
   before(:each) do
-    @black = Pieces.new('Black')
-    @brown = Pieces.new('Brown')
-    @board = Board.new(@black.pieces, @brown.pieces)
+    @board = Board.new([], [])
   end
 
   describe '#get_possible_moves' do
