@@ -7,8 +7,9 @@ BLACK_FOREGROUND = "\e[30m".freeze
 BROWN_FOREGROUND = "\e[38;5;160m".freeze
 describe Board do
   before(:each) do
-    @pieces = Pieces.new(BLACK_FOREGROUND, BROWN_FOREGROUND)
-    @board = Board.new(@pieces.all_pieces)
+    @black = Pieces.new(BLACK_FOREGROUND)
+    @brown = Pieces.new(BROWN_FOREGROUND)
+    @board = Board.new(@black.pieces, @brown.pieces)
   end
 
   describe '#get_piece(position)' do

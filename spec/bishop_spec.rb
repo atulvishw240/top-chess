@@ -9,8 +9,9 @@ describe Bishop do
   end
 
   before(:each) do
-    @pieces = Pieces.new('Black', 'Brown')
-    @board = Board.new(@pieces)
+    @black = Pieces.new('Black')
+    @brown = Pieces.new('Brown')
+    @board = Board.new(@black.pieces, @brown.pieces)
   end
 
   describe '#get_possible_moves' do
