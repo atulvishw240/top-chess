@@ -9,6 +9,9 @@ require_relative 'chess_rules_spec'
 require_relative '../modules/constants'
 
 describe ChessRules do
+  def get_pos(row_index, col_index)
+    Position.new(row_index, col_index)
+  end
   describe '#check' do
     it 'returns true when the black king is in check by brown queen' do
       king = King.new(Constants::BLACK_FOREGROUND, Position.new(3, 3))
@@ -49,7 +52,8 @@ describe ChessRules do
       rook = Rook.new(Constants::BROWN_FOREGROUND, Position.new(7, 4))
       board = Board.new([king], [rook])
       rules = ChessRules.new
-      expect(rules.all_legal_moves(board, king)).to eq(%w[d8 f8 d7 f7])
+      moves = [get_pos(0, 3), get_pos(0, 5), get_pos(1, 3), get_pos(1, 5)]
+      expect(rules.all_legal_moves(board, king)).to eq(moves)
     end
   end
 
