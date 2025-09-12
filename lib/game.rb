@@ -1,8 +1,9 @@
+require_relative 'chess_rules'
 require_relative '../modules/constants'
 require_relative 'file_rank_interface'
 # Contains Game Logic
 class Game
-  attr_reader :board, :current_player_id
+  attr_reader :board, :current_player_id, :rules
 
   include FileRankInterface
   include Constants
@@ -11,23 +12,22 @@ class Game
     @board = board
     @players = [player1, player2]
     @current_player_id = 0
+    @rules = ChessRules.new
   end
 
   def play
-    setup_pieces_on_board
     loop do
       board.display
-      p check?
+      p rules.check?(board, current_player.color)
 
-      selections = pieces_available_for_selection(current_player.color)
-      break if checkmate?
+      selections = rules.pieces_available_for_selection(board, current_player.color)
+      break if rules.checkmate?(board, current_player.color)
 
       p selections
 
       piece = select_piece(selections)
 
-      moves = piece.get_possible_moves(board)
-      moves.map!(&:to_standard)
+      moves = rules.all_legal_moves(board, current_player.color, piece)
 
       p moves
 
@@ -38,43 +38,6 @@ class Game
     end
 
     puts "The #{opponent_player.name} won the game!!"
-  end
-
-  def pieces_available_for_selection(color)
-    selections = []
-    pieces = board.pieces_set(color)
-    pieces.each do |piece|
-      moves = all_possible_moves(piece)
-      selections << piece.position.to_standard unless moves.empty?
-    end
-
-    selections
-  end
-
-  def all_possible_moves(piece)
-    moves = piece.get_possible_moves(board)
-    moves = filter_moves_that_does_not_remove_check(piece, moves) if check?
-
-    moves
-  end
-
-  def filter_moves_that_does_not_remove_check(piece, moves)
-    prev_position = piece.position
-    filtered_moves = []
-    moves.each do |move|
-      next unless board.contains_piece?(move)
-
-      # Create a deep copy of Game object
-      copy_game = Marshal.load(Marshal.dump(self))
-      copy_board = copy_game.board
-      copy_board.delete_piece(move) if copy_board.contains_piece?(move)
-
-      copy_piece = copy_board.get_piece(prev_position)
-      copy_piece.position = move
-      filtered_moves << move unless copy_game.check?
-    end
-
-    filtered_moves
   end
 
   def select_piece(selections)
@@ -96,22 +59,6 @@ class Game
     board.update(piece, move)
   end
 
-  def check?
-    pieces = board.pieces_set(opponent_player.color)
-    moves = []
-    pieces.each { |piece| moves += piece.get_possible_moves(board) }
-    king = board.king(current_player.color)
-    moves.any? { |move| move == king.position }
-  end
-
-  def checkmate?
-    check? && pieces_available_for_selection.empty?
-  end
-
-  def stalemate?
-    pieces_available_for_selection.empty?
-  end
-
   def capture?(position)
     # If move contains a piece then its a capture.
     board.contains_piece?(position)
@@ -131,16 +78,6 @@ class Game
 
   def switch_players!
     @current_player_id = 1 - @current_player_id
-  end
-
-  def setup_pieces_on_board
-    board.dark_pieces.each do |piece|
-      board.update(piece, piece.position)
-    end
-
-    board.light_pieces.each do |piece|
-      board.update(piece, piece.position)
-    end
   end
 
   # Convert d1 to Position.new(1, 4)
