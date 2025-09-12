@@ -19,6 +19,7 @@ class ChessRules
 
   def all_legal_moves(board, color, piece)
     moves = piece.get_possible_moves(board)
+    moves.map!(&:to_standard)
     moves = filter_moves_for_check(board, piece) if check?(board, color)
 
     moves
