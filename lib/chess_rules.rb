@@ -2,6 +2,7 @@ require_relative '../modules/constants'
 require_relative '../pieces/king'
 require_relative '../pieces/queen'
 require_relative '../pieces/rook'
+require_relative '../pieces/knight'
 # Contains game logic for our chess
 class ChessRules
   include Constants
@@ -33,7 +34,7 @@ class ChessRules
       copy_board.delete_piece(move) if copy_board.contains_piece?(move)
 
       copy_piece = copy_board.get_piece(piece.position)
-      copy_piece.position = move
+      copy_board.update(copy_piece, move)
       filtered_moves << move.to_standard unless check?(copy_board, piece.color)
     end
 
