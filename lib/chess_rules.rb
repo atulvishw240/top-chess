@@ -23,14 +23,23 @@ class ChessRules
     filtered_moves = []
     moves.each do |move|
       copy_board = Marshal.load(Marshal.dump(board))
-      copy_board.delete_piece(move) if copy_board.contains_piece?(move)
-
       copy_piece = copy_board.get_piece(piece.position)
-      copy_board.update(copy_piece, move)
+      update_game_state(copy_board, copy_piece, move)
       filtered_moves << move.to_standard unless check?(copy_board, piece.color)
     end
 
     filtered_moves
+  end
+
+  def update_game_state(board, piece, position)
+    board.delete_piece(position) if capture?(board, position)
+
+    board.update(piece, position)
+  end
+
+  def capture?(board, position)
+    # If move contains a piece then its a capture.
+    board.contains_piece?(position)
   end
 
   def check?(board, color)
