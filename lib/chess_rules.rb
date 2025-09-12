@@ -23,10 +23,10 @@ class ChessRules
 
     filtered_moves = []
     moves.each do |move|
-      board_copy = Marshal.load(Marshal.dump(board))
-      piece_copy = board_copy.get_piece(piece.position)
-      update_game_state(board_copy, piece_copy, move)
-      filtered_moves << move.to_standard unless check?(board_copy, piece.color)
+      copy_board = Marshal.load(Marshal.dump(board))
+      copy_piece = copy_board.get_piece(piece.position)
+      update_game_state(copy_board, copy_piece, move)
+      filtered_moves << move.to_standard unless check?(copy_board, piece.color)
     end
 
     filtered_moves
