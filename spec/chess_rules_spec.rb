@@ -43,13 +43,13 @@ describe ChessRules do
     end
   end
 
-  describe '#filter_moves_for_check' do
-    it 'limit black king moves when its in check by brown queen' do
+  describe '#all_legal_moves' do
+    it 'returns all legal moves for black king' do
       king = King.new(Constants::BLACK_FOREGROUND, Position.new(0, 4))
       rook = Rook.new(Constants::BROWN_FOREGROUND, Position.new(7, 4))
       board = Board.new([king], [rook])
       rules = ChessRules.new
-      expect(rules.filter_moves_for_check(board, king)).to eq(%w[d8 f8 d7 f7])
+      expect(rules.all_legal_moves(board, king)).to eq(%w[d8 f8 d7 f7])
     end
   end
 
@@ -101,6 +101,16 @@ describe ChessRules do
       board = Board.new([black_king], [bishop, bishop2, brown_king])
       rules = ChessRules.new
       expect(rules.checkmate?(board, Constants::BLACK_FOREGROUND)).to eq(true)
+    end
+  end
+
+  describe '#stalemate' do
+    it 'returns true when black has no possible moves and he is not in check' do
+      king = King.new(Constants::BLACK_FOREGROUND, Position.new(0, 0))
+      queen = Queen.new(Constants::BROWN_FOREGROUND, Position.new(2, 1))
+      board = Board.new([king], [queen])
+      rules = ChessRules.new
+      expect(rules.stalemate?(board, Constants::BLACK_FOREGROUND)).to eq(true)
     end
   end
 end

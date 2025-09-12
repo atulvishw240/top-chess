@@ -11,22 +11,14 @@ class ChessRules
     selections = []
     pieces = board.pieces_set(color)
     pieces.each do |piece|
-      moves = all_legal_moves(board, color, piece)
+      moves = all_legal_moves(board, piece)
       selections << piece.position.to_standard unless moves.empty?
     end
 
     selections
   end
 
-  def all_legal_moves(board, color, piece)
-    moves = piece.get_possible_moves(board)
-    moves.map!(&:to_standard)
-    moves = filter_moves_for_check(board, piece) if check?(board, color)
-
-    moves
-  end
-
-  def filter_moves_for_check(board, piece)
+  def all_legal_moves(board, piece)
     moves = piece.get_possible_moves(board)
     filtered_moves = []
     moves.each do |move|
@@ -51,6 +43,10 @@ class ChessRules
 
   def checkmate?(board, color)
     check?(board, color) && pieces_available_for_selection(board, color).empty?
+  end
+
+  def stalemate?(board, color)
+    pieces_available_for_selection(board, color).empty?
   end
 
   def opponent_color(color)
