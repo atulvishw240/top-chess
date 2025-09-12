@@ -20,21 +20,32 @@ class ChessRules
 
   def all_legal_moves(board, piece)
     moves = piece.get_possible_moves(board)
+
     filtered_moves = []
     moves.each do |move|
-      copy_board = Marshal.load(Marshal.dump(board))
-      copy_board.delete_piece(move) if copy_board.contains_piece?(move)
-
-      copy_piece = copy_board.get_piece(piece.position)
-      copy_board.update(copy_piece, move)
-      filtered_moves << move.to_standard unless check?(copy_board, piece.color)
+      board_copy = Marshal.load(Marshal.dump(board))
+      piece_copy = board_copy.get_piece(piece.position)
+      update_game_state(board_copy, piece_copy, move)
+      filtered_moves << move.to_standard unless check?(board_copy, piece.color)
     end
 
     filtered_moves
   end
 
+  def update_game_state(board, piece, position)
+    board.delete_piece(position) if capture?(board, position)
+
+    board.update(piece, position)
+  end
+
+  def capture?(board, position)
+    # If move contains a piece then its a capture.
+    board.contains_piece?(position)
+  end
+
   def check?(board, color)
     pieces = board.pieces_set(opponent_color(color))
+
     moves = []
     pieces.each { |piece| moves += piece.get_possible_moves(board) }
     king = board.king(color)
@@ -42,7 +53,10 @@ class ChessRules
   end
 
   def checkmate?(board, color)
-    check?(board, color) && pieces_available_for_selection(board, color).empty?
+    in_check = check?(board, color)
+    no_valid_moves = pieces_available_for_selection(board, color).empty?
+
+    in_check && no_valid_moves
   end
 
   def stalemate?(board, color)

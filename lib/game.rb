@@ -53,17 +53,6 @@ class Game
     to_position_object(move)
   end
 
-  def update_game_state(piece, move)
-    board.delete_piece(move) if capture?(move)
-
-    board.update(piece, move)
-  end
-
-  def capture?(position)
-    # If move contains a piece then its a capture.
-    board.contains_piece?(position)
-  end
-
   def current_player
     @players[current_player_id]
   end
