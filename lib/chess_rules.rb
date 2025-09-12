@@ -26,7 +26,7 @@ class ChessRules
       copy_board = Marshal.load(Marshal.dump(board))
       copy_piece = copy_board.get_piece(piece.position)
       update_game_state(copy_board, copy_piece, move)
-      filtered_moves << move.to_standard unless check?(copy_board, piece.color)
+      filtered_moves << move unless check?(copy_board, piece.color)
     end
 
     filtered_moves

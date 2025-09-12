@@ -74,6 +74,11 @@ class Board
     end
   end
 
+  def assign_color_to_square(position, color)
+    square = get_square(position)
+    square.color = color
+  end
+
   # --------------  PRIVATE METHODS  -------------------
   def assign_color_to_squares
     board.each_with_index do |row, row_index|

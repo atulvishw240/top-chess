@@ -28,6 +28,11 @@ class Game
       piece = select_piece(selections)
 
       moves = rules.all_legal_moves(board, piece)
+      display_markers_and_captures(moves)
+      board.display
+      clean_markers_and_captures(moves)
+
+      moves.map!(&:to_standard)
 
       p moves
 
@@ -45,6 +50,45 @@ class Game
     selection = current_player.select(selections)
     position = to_position_object(selection)
     board.get_piece(position)
+  end
+
+  def display_markers_and_captures(moves)
+    # It happens after you select a piece to move
+    # FOR each move
+    #   If the square is empty at move THEN apply marker
+    #   Else apply captures
+    # ENDFOR
+    moves.each do |move|
+      if board.contains_piece?(move)
+        # Apply captures
+        board.assign_color_to_square(move, Constants::CAPTURE)
+      else
+        # Apply marker
+        board.update_square(Constants::MARKER, move)
+      end
+    end
+  end
+
+  def clean_markers_and_captures(moves)
+    moves.each do |move|
+      if board.contains_piece?(move)
+        # Color cyan ya white aayega
+        color = color(move)
+        board.assign_color_to_square(move, color)
+      else
+        board.update_square(Constants::EMPTY, move)
+      end
+    end
+  end
+
+  def color(position)
+    sum = position.row + position.col
+
+    if sum.even?
+      WHITE_BACKGROUND
+    else
+      CYAN_BACKGROUND
+    end
   end
 
   def select_move(moves)
