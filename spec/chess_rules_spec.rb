@@ -53,6 +53,17 @@ describe ChessRules do
     end
   end
 
+  describe '#possible_pieces_available_for_selection' do
+    it 'returns the pieces that can resolve check' do
+      king = King.new(Constants::BLACK_FOREGROUND, Position.new(1, 5))
+      knight = Knight.new(Constants::BLACK_FOREGROUND, Position.new(0, 6))
+      queen = Queen.new(Constants::BROWN_FOREGROUND, Position.new(6, 5))
+      board = Board.new([king, knight], [queen])
+      rules = ChessRules.new
+      expect(rules.pieces_available_for_selection(board, Constants::BLACK_FOREGROUND)).to eq(%w[f7 g8])
+    end
+  end
+
   describe '#checkmate' do
     it 'returns true when black king gets checkmated by two brown rooks' do
       king = King.new(Constants::BLACK_FOREGROUND, Position.new(0, 0))
