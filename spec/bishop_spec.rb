@@ -2,7 +2,6 @@ require_relative '../lib/position'
 require_relative '../lib/board'
 require_relative '../pieces/bishop'
 require_relative '../pieces/pieces'
-require_relative '../pieces/bishop'
 require_relative '../pieces/king'
 
 describe Bishop do
