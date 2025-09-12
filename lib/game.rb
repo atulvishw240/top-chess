@@ -27,12 +27,12 @@ class Game
 
       piece = select_piece(selections)
 
-      moves = rules.all_legal_moves(board, current_player.color, piece)
+      moves = rules.all_legal_moves(board, piece)
 
       p moves
 
       move = select_move(moves)
-      update_game_state(piece, move)
+      rules.update_game_state(board, piece, move)
 
       switch_players!
     end
