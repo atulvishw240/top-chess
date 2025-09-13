@@ -1,11 +1,11 @@
 require_relative 'chess_rules'
 require_relative '../modules/constants'
-require_relative 'file_rank_interface'
+require_relative 'utility'
 # Contains Game Logic
 class Game
   attr_reader :board, :current_player_id, :rules
 
-  include FileRankInterface
+  include Utility
   include Constants
 
   def initialize(board, player1, player2)

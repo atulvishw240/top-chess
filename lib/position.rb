@@ -1,7 +1,7 @@
-require_relative 'file_rank_interface'
+require_relative 'utility'
 # Value Object i.e. meant to be pass around in our application
 class Position
-  include FileRankInterface
+  include Utility
 
   attr_accessor :row, :col
 
