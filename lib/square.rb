@@ -13,17 +13,6 @@ class Square
     piece.is_a?(Piece)
   end
 
-  def default_color_of_square(position)
-    sum = position.row + position.col
-
-    self.color =
-      if sum.even?
-        WHITE_BACKGROUND
-      else
-        CYAN_BACKGROUND
-      end
-  end
-
   def to_s
     "#{color}#{piece}#{RESET_TERMINAL}"
   end

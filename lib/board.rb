@@ -72,6 +72,16 @@ class Board
 
   # --------------  PRIVATE METHODS  -------------------
 
+  def color(position)
+    sum = position.row + position.col
+
+    if sum.even?
+      Constants::WHITE_BACKGROUND
+    else
+      Constants::CYAN_BACKGROUND
+    end
+  end
+
   def get_square(position)
     row_index = position.row
     col_index = position.col
@@ -86,9 +96,9 @@ class Board
 
   def assign_color_to_squares
     board.each_with_index do |row, row_index|
-      row.each_with_index do |square, col_index|
+      row.each_with_index do |_, col_index|
         position = Position.new(row_index, col_index)
-        square.default_color_of_square(position)
+        assign_color_to_square(position, color(position))
       end
     end
   end
