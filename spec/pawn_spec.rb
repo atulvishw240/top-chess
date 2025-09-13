@@ -1,5 +1,6 @@
 require_relative '../lib/board'
 require_relative '../pieces/pawn'
+require_relative '../pieces/piece'
 require_relative '../lib/position'
 require_relative '../modules/constants'
 
