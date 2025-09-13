@@ -33,5 +33,14 @@ describe Pawn do
       moves = black_pawn.get_possible_moves(board)
       expect(moves).to eq(poss_moves)
     end
+
+    it 'returns all possible moves when black pawn is blocked by its own piece' do
+      black_pawn = Pawn.new(Constants::BLACK_FOREGROUND, get_pos(3, 0))
+      black_pawn2 = Pawn.new(Constants::BLACK_FOREGROUND, get_pos(4, 0))
+      board = Board.new([black_pawn], [black_pawn2])
+      poss_moves = []
+      moves = black_pawn.get_possible_moves(board)
+      expect(moves).to eq(poss_moves)
+    end
   end
 end
