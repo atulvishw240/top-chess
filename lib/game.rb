@@ -39,6 +39,14 @@ class Game
       move = select_move(moves)
       rules.update_game_state(board, piece, move)
 
+      if rules.promotion?(board, current_player.color)
+        choice = promote_to
+        board.delete_piece(move)
+        promoted_piece = piece_factory(choice, current_player.color, move)
+        board.add_piece(promoted_piece)
+        board.update(promoted_piece, move)
+      end
+
       switch_players!
     end
 
@@ -87,6 +95,32 @@ class Game
     puts 'Enter the coordinates where you would like to move your piece.'
     move = current_player.select(moves)
     to_position_object(move)
+  end
+
+  def promote_to
+    puts 'Promote your pawn to:'
+    puts '1) Queen'
+    puts '2) Rook'
+    puts '3) Bishop'
+    puts '4) Knight'
+
+    puts 'Enter your choice (integer): '
+    choice = gets.chomp.to_i
+
+    choice if choice.between?(1, 4)
+  end
+
+  def piece_factory(integer, color, position)
+    case integer
+    when 1
+      Queen.new(color, position)
+    when 2
+      Rook.new(color, position)
+    when 3
+      Bishop.new(color, position)
+    when 4
+      Knight.new(color, position)
+    end
   end
 
   def current_player

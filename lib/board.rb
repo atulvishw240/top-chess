@@ -50,6 +50,11 @@ class Board
     update(EMPTY, position)
   end
 
+  def add_piece(piece)
+    pieces = pieces_set(piece.color)
+    pieces << piece
+  end
+
   def pieces_set(color)
     if color == BLACK_FOREGROUND
       dark_pieces
