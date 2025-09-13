@@ -86,6 +86,10 @@ class Pawn < Piece
     black? ? 1 : 6
   end
 
+  def last_position
+    black? ? 7 : 0
+  end
+
   def get_pos(row_index, col_index)
     Position.new(row_index, col_index)
   end

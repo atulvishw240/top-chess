@@ -65,6 +65,16 @@ class Board
     end
   end
 
+  def pawns(color)
+    pawns = []
+    pieces = pieces_set(color)
+    pieces.each do |piece|
+      pawns << piece if piece.is_a?(Pawn)
+    end
+
+    pawns
+  end
+
   def assign_color_to_square(position, color)
     square = get_square(position)
     square.color = color
