@@ -42,5 +42,24 @@ describe Pawn do
       moves = black_pawn.get_possible_moves(board)
       expect(moves).to eq(poss_moves)
     end
+
+    it 'returns all possible moves when black pawn has a capture at one diagona' do
+      black_pawn = Pawn.new(Constants::BLACK_FOREGROUND, get_pos(1, 0))
+      brown_pawn = Pawn.new(Constants::BROWN_FOREGROUND, get_pos(2, 1))
+      board = Board.new([black_pawn], [brown_pawn])
+      poss_moves = [get_pos(2, 0), get_pos(3, 0), get_pos(2, 1)]
+      moves = black_pawn.get_possible_moves(board)
+      expect(moves).to eq(poss_moves)
+    end
+
+    it 'returns all possible moves when black pawn has a capture at one diagona' do
+      black_pawn = Pawn.new(Constants::BLACK_FOREGROUND, get_pos(1, 1))
+      brown_pawn = Pawn.new(Constants::BROWN_FOREGROUND, get_pos(2, 2))
+      brown_pawn2 = Pawn.new(Constants::BROWN_FOREGROUND, get_pos(2, 0))
+      board = Board.new([black_pawn], [brown_pawn, brown_pawn2])
+      poss_moves = [get_pos(2, 1), get_pos(3, 1), get_pos(2, 2), get_pos(2, 0)]
+      moves = black_pawn.get_possible_moves(board)
+      expect(moves).to eq(poss_moves)
+    end
   end
 end

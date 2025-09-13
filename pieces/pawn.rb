@@ -1,4 +1,5 @@
 require_relative 'piece'
+require_relative '../lib/board'
 # Represents Pawn in our Game
 class Pawn < Piece
   def unicode
@@ -8,7 +9,7 @@ class Pawn < Piece
   def get_possible_moves(board)
     # Captures functionality is left for later
     steps = no_of_steps
-    move_one_or_two_steps(board, position, steps)
+    move_one_or_two_steps(board, position, steps) + capture(board, position)
   end
 
   # def move
@@ -24,6 +25,25 @@ class Pawn < Piece
     else
       1
     end
+  end
+
+  def capture(board, position)
+    captures = []
+
+    row_index = position.row
+    col_index = position.col
+    diagonals = diagonals(row_index, col_index)
+    diagonals.each do |coordinate|
+      move = Position.new(coordinate[0], coordinate[1])
+      next unless move.valid?
+
+      if board.contains_piece?(move)
+        piece = board.get_piece(move)
+        captures << move unless piece.color == color
+      end
+    end
+
+    captures
   end
 
   def move_one_or_two_steps(board, position, steps)
@@ -53,6 +73,14 @@ class Pawn < Piece
     end
   end
 
+  def diagonals(row_index, col_index)
+    if black?
+      [[row_index + 1, col_index + 1], [row_index + 1, col_index - 1]]
+    else
+      [[row_index - 1, col_index + 1], [row_index - 1, col_index - 1]]
+    end
+  end
+
   def black?
     color == BLACK_FOREGROUND
   end
@@ -68,3 +96,9 @@ class Pawn < Piece
     black? ? 1 : 6
   end
 end
+
+black_pawn = Pawn.new(Constants::BLACK_FOREGROUND, Position.new(1, 0))
+brown_pawn = Pawn.new(Constants::BROWN_FOREGROUND, Position.new(2, 1))
+board = Board.new([black_pawn], [brown_pawn])
+# poss_moves = [get_pos(2, 0), get_pos(3, 0), get_pos(2, 1)]
+p black_pawn.get_possible_moves(board)
