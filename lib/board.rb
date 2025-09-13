@@ -10,8 +10,7 @@ class Board
     @board = Array.new(8) { Array.new(8) { Square.new } }
     @dark_pieces = dark
     @light_pieces = light
-    assign_color_to_squares
-    setup_pieces_on_board
+    setup_board
   end
 
   def display
@@ -27,11 +26,9 @@ class Board
     puts '  a b c d e f g h'
   end
 
-  def update(piece, new_position)
-    prev_position = piece.position
-    update_square(EMPTY, prev_position)
-    piece.position = new_position
-    update_square(piece, new_position)
+  def update(update_with, new_position)
+    square = get_square(new_position)
+    square.piece = update_with
   end
 
   def contains_piece?(position)
@@ -44,19 +41,13 @@ class Board
     square.piece
   end
 
-  def add_piece(piece, position)
-    piece.position = position
-    pieces << piece
-    update(piece, position)
-  end
-
   def delete_piece(position)
     piece = get_piece(position)
     color = piece.color
     pieces = pieces_set(color)
     pieces.delete(piece)
 
-    update_square(EMPTY, position)
+    update(EMPTY, position)
   end
 
   def pieces_set(color)
@@ -80,13 +71,6 @@ class Board
   end
 
   # --------------  PRIVATE METHODS  -------------------
-  def assign_color_to_squares
-    board.each_with_index do |row, row_index|
-      row.each_with_index do |square, col_index|
-        square.assign_color(row_index, col_index)
-      end
-    end
-  end
 
   def get_square(position)
     row_index = position.row
@@ -95,18 +79,26 @@ class Board
     board[row_index][col_index]
   end
 
-  def update_square(update_with, position)
-    square = get_square(position)
-    square.piece = update_with
+  def setup_board
+    assign_color_to_squares
+    setup_pieces_on_board
+  end
+
+  def assign_color_to_squares
+    board.each_with_index do |row, row_index|
+      row.each_with_index do |square, col_index|
+        position = Position.new(row_index, col_index)
+        square.default_color_of_square(position)
+      end
+    end
   end
 
   def setup_pieces_on_board
-    dark_pieces.each do |piece|
-      update(piece, piece.position)
-    end
-
-    light_pieces.each do |piece|
-      update(piece, piece.position)
+    pieces_set = [dark_pieces, light_pieces]
+    pieces_set.each do |dark_or_light_pieces|
+      dark_or_light_pieces.each do |piece|
+        update(piece, piece.position)
+      end
     end
   end
 end

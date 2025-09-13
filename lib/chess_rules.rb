@@ -35,6 +35,9 @@ class ChessRules
   def update_game_state(board, piece, position)
     board.delete_piece(position) if capture?(board, position)
 
+    prev_position = piece.position
+    board.update(Constants::EMPTY, prev_position)
+    piece.position = position
     board.update(piece, position)
   end
 

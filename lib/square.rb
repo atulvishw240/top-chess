@@ -13,8 +13,8 @@ class Square
     piece.is_a?(Piece)
   end
 
-  def assign_color(row_index, col_index)
-    sum = add(row_index, col_index)
+  def default_color_of_square(position)
+    sum = position.row + position.col
 
     self.color =
       if sum.even?
@@ -26,10 +26,5 @@ class Square
 
   def to_s
     "#{color}#{piece}#{RESET_TERMINAL}"
-  end
-
-  # ------------------------- PRIVATE METHODS -------------------------------
-  def add(row_index, col_index)
-    row_index + col_index
   end
 end
