@@ -3,6 +3,7 @@ require_relative '../pieces/king'
 require_relative '../pieces/queen'
 require_relative '../pieces/rook'
 require_relative '../pieces/knight'
+require_relative '../pieces/pawn'
 # Contains game logic for our chess
 class ChessRules
   include Constants
@@ -66,7 +67,36 @@ class ChessRules
     pieces_available_for_selection(board, color).empty?
   end
 
+  def promotion?(board, color)
+    # Look at board for pieces of certain color
+    # Get all the pawns of this color
+    # FOR each pawn
+    #   If the pawn is at last rank from its starting position THEN return true
+    # ENFOR
+    pawns = []
+    pieces = board.pieces_set(color)
+    pieces.each do |piece|
+      pawns << piece if piece.is_a?(Pawn)
+    end
+
+    pawns.each do |pawn|
+      if pawn.color == BLACK_FOREGROUND && pawn.position.row == 7
+        return true
+      elsif pawn.color == BROWN_FOREGROUND && pawn.position.row == 0
+        return true
+      end
+    end
+  end
+
   def opponent_color(color)
     color == BLACK_FOREGROUND ? BROWN_FOREGROUND : BLACK_FOREGROUND
   end
 end
+
+black_pawn = Pawn.new(Constants::BLACK_FOREGROUND, Position.new(0, 7))
+black_pawn2 = Pawn.new(Constants::BLACK_FOREGROUND, Position.new(2, 4))
+brown_pawn = Pawn.new(Constants::BROWN_FOREGROUND, Position.new(4, 7))
+brown_pawn2 = Pawn.new(Constants::BROWN_FOREGROUND, Position.new(5, 4))
+board = Board.new([black_pawn, black_pawn2], [brown_pawn, brown_pawn2])
+rules = ChessRules.new
+p rules.promotion?(board, Constants::BLACK_FOREGROUND)

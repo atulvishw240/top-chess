@@ -4,6 +4,7 @@ require_relative '../pieces/queen'
 require_relative '../pieces/bishop'
 require_relative '../pieces/knight'
 require_relative '../pieces/rook'
+require_relative '../pieces/pawn'
 require_relative '../lib/board'
 require_relative 'chess_rules_spec'
 require_relative '../modules/constants'
@@ -115,6 +116,28 @@ describe ChessRules do
       board = Board.new([king], [queen])
       rules = ChessRules.new
       expect(rules.stalemate?(board, Constants::BLACK_FOREGROUND)).to eq(true)
+    end
+  end
+
+  describe '#promotion' do
+    it 'returns true if a pawn of certain color can be promoted' do
+      black_pawn = Pawn.new(Constants::BLACK_FOREGROUND, Position.new(7, 0))
+      black_pawn2 = Pawn.new(Constants::BLACK_FOREGROUND, Position.new(2, 4))
+      brown_pawn = Pawn.new(Constants::BROWN_FOREGROUND, Position.new(4, 7))
+      brown_pawn2 = Pawn.new(Constants::BROWN_FOREGROUND, Position.new(5, 4))
+      board = Board.new([black_pawn, black_pawn2], [brown_pawn, brown_pawn2])
+      rules = ChessRules.new
+      expect(rules.promotion?(board, Constants::BLACK_FOREGROUND)).to eq(true)
+    end
+
+    it 'returns true if a pawn of certain color can be promoted' do
+      black_pawn = Pawn.new(Constants::BLACK_FOREGROUND, Position.new(3, 0))
+      black_pawn2 = Pawn.new(Constants::BLACK_FOREGROUND, Position.new(2, 4))
+      brown_pawn = Pawn.new(Constants::BROWN_FOREGROUND, Position.new(0, 7))
+      brown_pawn2 = Pawn.new(Constants::BROWN_FOREGROUND, Position.new(5, 4))
+      board = Board.new([black_pawn, black_pawn2], [brown_pawn, brown_pawn2])
+      rules = ChessRules.new
+      expect(rules.promotion?(board, Constants::BROWN_FOREGROUND)).to eq(true)
     end
   end
 end
