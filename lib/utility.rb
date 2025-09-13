@@ -1,6 +1,6 @@
 # Interface to convert our moves and pieces selections from the format
 # row_index, col_index to filerank (i.e e1, a2, b1, etc.)
-module FileRankInterface
+module Utility
   FILES = %w[a b c d e f g h].freeze
 
   private
