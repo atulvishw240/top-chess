@@ -53,18 +53,11 @@ class Game
   end
 
   def display_markers_and_captures(moves)
-    # It happens after you select a piece to move
-    # FOR each move
-    #   If the square is empty at move THEN apply marker
-    #   Else apply captures
-    # ENDFOR
     moves.each do |move|
       if board.contains_piece?(move)
-        # Apply captures
         board.assign_color_to_square(move, Constants::CAPTURE)
       else
-        # Apply marker
-        board.update_square(Constants::MARKER, move)
+        board.update(Constants::MARKER, move)
       end
     end
   end
@@ -72,11 +65,10 @@ class Game
   def clean_markers_and_captures(moves)
     moves.each do |move|
       if board.contains_piece?(move)
-        # Color cyan ya white aayega
         color = color(move)
         board.assign_color_to_square(move, color)
       else
-        board.update_square(Constants::EMPTY, move)
+        board.update(Constants::EMPTY, move)
       end
     end
   end
