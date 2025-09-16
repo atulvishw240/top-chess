@@ -1,9 +1,10 @@
 require_relative 'chess_rules'
+require_relative 'ui'
 require_relative '../modules/constants'
 require_relative 'utility'
 # Contains Game Logic
 class Game
-  attr_reader :board, :current_player_id, :rules
+  attr_reader :board, :current_player_id, :rules, :ui
 
   include Utility
   include Constants
@@ -13,6 +14,7 @@ class Game
     @players = [player1, player2]
     @current_player_id = 0
     @rules = ChessRules.new
+    @ui = UserInterface.new
   end
 
   def play
@@ -25,18 +27,19 @@ class Game
 
       p selections
 
-      piece = select_piece(selections)
+      pos = ui.select_piece(current_player, selections)
+      piece = board.get_piece(pos)
 
       moves = rules.all_legal_moves(board, piece)
-      display_markers_and_captures(moves)
+      ui.display_markers_and_captures(board, moves)
       board.display
-      clean_markers_and_captures(moves)
+      ui.clean_markers_and_captures(board, moves)
 
       moves.map!(&:to_standard)
 
       p moves
 
-      move = select_move(moves)
+      move = ui.select_move(current_player, moves)
       rules.update_game_state(board, piece, move)
 
       if rules.promotion?(board, current_player.color)
