@@ -33,6 +33,12 @@ class UserInterface
     promote_to
   end
 
+  def display_moves_and_captures(board, moves)
+    display_markers_and_captures(board, moves)
+    board.display
+    clean_markers_and_captures(board, moves)
+  end
+
   def display_markers_and_captures(board, moves)
     moves.each do |move|
       if board.contains_piece?(move)

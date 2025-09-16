@@ -20,28 +20,27 @@ class Game
   def play
     loop do
       board.display
-      p rules.check?(board, current_player.color)
-
-      selections = rules.pieces_available_for_selection(board, current_player.color)
       break if rules.checkmate?(board, current_player.color)
 
+      # Select a piece to move
+      selections = rules.pieces_available_for_selection(board, current_player.color)
       p selections
+      position_of_piece = ui.select_piece(current_player, selections)
+      piece = board.get_piece(position_of_piece)
 
-      pos = ui.select_piece(current_player, selections)
-      piece = board.get_piece(pos)
-
+      # Display possible actions for this piece (markers and captures)
       moves = rules.all_legal_moves(board, piece)
-      ui.display_markers_and_captures(board, moves)
-      board.display
-      ui.clean_markers_and_captures(board, moves)
+      ui.display_moves_and_captures(board, moves)
 
-      moves.map!(&:to_standard)
+      # Convert move position objects into "a1" format
+      standard_format = moves.map(&:to_standard)
+      p standard_format
 
-      p moves
+      # Ask player to make a move
+      move = ui.select_move(current_player, standard_format)
 
-      move = ui.select_move(current_player, moves)
+      # Update game state to relfect move
       rules.update_game_state(board, piece, move)
-
       if rules.promotion?(board, current_player.color)
         choice = ui.promote_to
         board.delete_piece(move)
