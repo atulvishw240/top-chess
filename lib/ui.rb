@@ -75,13 +75,4 @@ class UserInterface
       CYAN_BACKGROUND
     end
   end
-
-  # Convert d1 to Position.new(1, 4)
-  def to_position_object(standard_form)
-    coordinates = standard_form.chars
-    row = to_row_index(coordinates[1].to_i)
-    col = to_col_index(coordinates[0])
-
-    Position.new(row, col)
-  end
 end
