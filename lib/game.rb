@@ -25,8 +25,12 @@ class Game
       # Select a piece to move
       selections = rules.pieces_available_for_selection(board, current_player.color)
       p selections
-      position_of_piece = ui.select_piece(current_player, selections)
-      piece = board.get_piece(position_of_piece)
+      # piece = ui.select_piece(board, current_player, selections)
+      input = ui.select_piece(selections)
+      break if input == 'resign'
+
+      piece_pos = to_position_object(input)
+      piece = board.get_piece(piece_pos)
 
       # Display possible actions for this piece (markers and captures)
       moves = rules.all_legal_moves(board, piece)
@@ -37,7 +41,10 @@ class Game
       p standard_format
 
       # Ask player to make a move
-      move = ui.select_move(current_player, standard_format)
+      move = ui.select_move(standard_format)
+      break if move == 'resign'
+
+      move = to_position_object(move)
 
       # Update game state to relfect move
       rules.update_game_state(board, piece, move)
@@ -82,5 +89,14 @@ class Game
 
   def switch_players!
     @current_player_id = 1 - @current_player_id
+  end
+
+  # Convert d1 to Position.new(1, 4)
+  def to_position_object(standard_form)
+    coordinates = standard_form.chars
+    row = to_row_index(coordinates[1].to_i)
+    col = to_col_index(coordinates[0])
+
+    Position.new(row, col)
   end
 end

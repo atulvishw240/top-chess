@@ -5,17 +5,40 @@ class UserInterface
   include Constants
   include Utility
 
-  def select_piece(player, selections)
-    puts 'Enter the coordinates of a piece which you want to select.'
-    selection = player.select(selections)
-    to_position_object(selection)
+  def select_piece(options)
+    puts 'Enter piece you want to select in the format [a1, b2, e3]: '
+    selection = gets.chomp
+    return selection if options.include?(selection) || selection == 'resign'
+
+    puts 'Your entered input is incorrect!! Try again'
+    select_piece(board, options)
   end
 
-  def select_move(player, moves)
-    puts 'Enter the coordinates where you would like to move your piece.'
-    move = player.select(moves)
-    to_position_object(move)
+  def select_move(options)
+    puts 'Enter move in the format [a1, b2, e3]: '
+    move = gets.chomp
+    return move if options.include?(move) || move == 'resign'
+
+    puts 'Your entered input is incorrect!! Try again'
+    select_piece(options)
   end
+
+  # def select_piece(board, player, selections)
+  #   puts 'Enter the coordinates of a piece which you want to select.'
+  #   selection = player.select(selections)
+  #   return selection if selection == 'resign'
+
+  #   position = to_position_object(selection)
+  #   board.get_piece(position)
+  # end
+
+  # def select_move(player, moves)
+  #   puts 'Enter the coordinates where you would like to move your piece.'
+  #   move = player.select(moves)
+  #   return move if move == 'resign'
+
+  #   to_position_object(move)
+  # end
 
   def promote_to
     puts 'Promote your pawn to:'
