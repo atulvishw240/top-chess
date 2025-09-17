@@ -4,12 +4,13 @@ require_relative '../modules/constants'
 class Piece
   include Constants
 
-  attr_accessor :position
+  attr_accessor :position, :has_moved
   attr_reader :color
 
   def initialize(color, position)
     @color = color
     @position = position
+    @has_moved = false
     @unicode = unicode
   end
 
