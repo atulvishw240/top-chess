@@ -25,7 +25,6 @@ class Game
       # Select a piece to move
       selections = rules.pieces_available_for_selection(board, current_player.color)
       p selections
-      # piece = ui.select_piece(board, current_player, selections)
       input = ui.select_piece(selections)
       break if input == 'resign'
 

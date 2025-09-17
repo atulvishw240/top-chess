@@ -23,23 +23,6 @@ class UserInterface
     select_piece(options)
   end
 
-  # def select_piece(board, player, selections)
-  #   puts 'Enter the coordinates of a piece which you want to select.'
-  #   selection = player.select(selections)
-  #   return selection if selection == 'resign'
-
-  #   position = to_position_object(selection)
-  #   board.get_piece(position)
-  # end
-
-  # def select_move(player, moves)
-  #   puts 'Enter the coordinates where you would like to move your piece.'
-  #   move = player.select(moves)
-  #   return move if move == 'resign'
-
-  #   to_position_object(move)
-  # end
-
   def promote_to
     puts 'Promote your pawn to:'
     puts '1) Queen'
