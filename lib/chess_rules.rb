@@ -48,12 +48,17 @@ class ChessRules
   end
 
   def check?(board, color)
-    pieces = board.pieces_set(opponent_color(color))
-
-    moves = []
-    pieces.each { |piece| moves += piece.get_possible_moves(board) }
+    moves = all_possible_moves_for_opponent(board, color)
     king = board.king(color)
     moves.any? { |move| move == king.position }
+  end
+
+  def all_possible_moves_for_opponent(board, color)
+    pieces = board.pieces_set(opponent_color(color))
+    moves = []
+    pieces.each { |piece| moves += piece.get_possible_moves(board) }
+
+    moves
   end
 
   def checkmate?(board, color)
