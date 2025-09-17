@@ -1,0 +1,47 @@
+require_relative '../lib/castle'
+require_relative '../pieces/king'
+require_relative '../pieces/rook'
+require_relative '../lib/board'
+
+describe Castle do
+  def get_pos(row_index, col_index)
+    Position.new(row_index, col_index)
+  end
+
+  describe '#king_side_castling for black' do
+    it 'returns true if black king can castle' do
+      king = King.new(Constants::BLACK_FOREGROUND, Position.new(0, 4))
+      rook = Rook.new(Constants::BLACK_FOREGROUND, Position.new(0, 7))
+      board = Board.new([king, rook], [])
+      castling = Castle.new
+      expect(castling.king_side_castling(board, Constants::BLACK_FOREGROUND)).to eq(true)
+    end
+
+    it 'returns false if black king cant castle' do
+      king = King.new(Constants::BLACK_FOREGROUND, Position.new(0, 4))
+      king.has_moved = true
+      rook = Rook.new(Constants::BLACK_FOREGROUND, Position.new(0, 7))
+      board = Board.new([king, rook], [])
+      castling = Castle.new
+      expect(castling.king_side_castling(board, Constants::BLACK_FOREGROUND)).to eq(false)
+    end
+
+    it 'returns false if black king cant castle' do
+      king = King.new(Constants::BLACK_FOREGROUND, Position.new(0, 4))
+      rook = Rook.new(Constants::BLACK_FOREGROUND, Position.new(0, 7))
+      rook.has_moved = true
+      board = Board.new([king, rook], [])
+      castling = Castle.new
+      expect(castling.king_side_castling(board, Constants::BLACK_FOREGROUND)).to eq(false)
+    end
+
+    it 'returns false if black king cant castle' do
+      king = King.new(Constants::BLACK_FOREGROUND, Position.new(0, 4))
+      rook = Rook.new(Constants::BLACK_FOREGROUND, Position.new(0, 7))
+      rook2 = Rook.new(Constants::BLACK_FOREGROUND, Position.new(0, 6))
+      board = Board.new([king, rook, rook2], [])
+      castling = Castle.new
+      expect(castling.king_side_castling(board, Constants::BLACK_FOREGROUND)).to eq(false)
+    end
+  end
+end
