@@ -17,10 +17,11 @@ class Castle
     rook = king_side_rook(board, color)
     return false if rook == EMPTY || rook.has_moved
 
+    opponent_moves = rules.all_possible_moves_for_opponent(board, color)
     position = king.position
     2.times do
       position = Position.new(position.row, position.col + 1)
-      return false if board.contains_piece?(position)
+      return false if board.contains_piece?(position) || opponent_moves.include?(position)
     end
 
     true
