@@ -4,9 +4,11 @@ require_relative '../modules/constants'
 class Castle
   include Constants
 
-  attr_accessor :rules
+  attr_accessor :queen_side, :king_side, :rules
 
   def initialize
+    @queen_side = false
+    @king_side = false
     @rules = ChessRules.new
   end
 
