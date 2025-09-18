@@ -23,79 +23,64 @@ class Castle
   end
 
   def king_side_castling(board, color)
-    # king = board.king(color)
-    # return if king.has_moved || rules.check?(board, color)
-
-    # rook = rook(board, color, :king)
-    # return if rook == EMPTY || rook.has_moved
-
-    # opponent_moves = rules.all_possible_moves_for_opponent(board, color)
-    # position = king.position
-    # no_of_empty_squares_between_king_and_rook(:king).times do
-    #   position = right_or_left(position, :right)
-    #   return if board.contains_piece?(position)
-    # end
-
-    # position = king.position
-    # 2.times do
-    #   position = right_or_left(position, :right)
-    #   return if opponent_moves.include?(position)
-    # end
-
     boolean = castle(board, color, :king)
-    # return if boolean.nil?
-
     self.king_side = boolean
   end
 
   def queen_side_castling(board, color)
-    # king = board.king(color)
-    # return if king.has_moved || rules.check?(board, color)
-
-    # rook = rook(board, color, :queen)
-    # return if rook == EMPTY || rook.has_moved
-
-    # opponent_moves = rules.all_possible_moves_for_opponent(board, color)
-    # position = king.position
-    # no_of_empty_squares_between_king_and_rook(:queen).times do
-    #   position = right_or_left(position, :left)
-    #   return if board.contains_piece?(position)
-    # end
-
-    # position = king.position
-    # 2.times do
-    #   position = right_or_left(position, :left)
-    #   return if opponent_moves.include?(position)
-    # end
-
     boolean = castle(board, color, :queen)
-    # return if boolean.nil?
-
     self.queen_side = boolean
   end
 
-  # side is a symbol
   def castle(board, color, side)
+    # Browse wikipedia to know
+    first = first_rule(board, color, side)
+    second = second_rule(board, color)
+    third = third_rule(board, color, side)
+    fourth = fourth_rule(board, color, side)
+    first && second && third && fourth
+  end
+
+  def first_rule(board, color, side)
     king = board.king(color)
-    return false if king.has_moved || rules.check?(board, color)
-
     rook = rook(board, color, side)
-    return false if rook == EMPTY || rook.has_moved
+    !ever_moved?(king) && !ever_moved?(rook)
+  end
 
-    opponent_moves = rules.all_possible_moves_for_opponent(board, color)
+  def second_rule(board, color)
+    !rules.check?(board, color)
+  end
+
+  def third_rule(board, color, side)
+    king = board.king(color)
+    number = no_of_squares_between_king_and_rook(side)
     position = king.position
-    no_of_empty_squares_between_king_and_rook(side).times do
+
+    number.times do
       position = right_or_left(position, direction(side))
       return false if board.contains_piece?(position)
     end
 
+    true
+  end
+
+  def fourth_rule(board, color, side)
+    opponent_moves = rules.all_possible_moves_for_opponent(board, color)
+    king = board.king(color)
     position = king.position
+
     2.times do
       position = right_or_left(position, direction(side))
       return false if opponent_moves.include?(position)
     end
 
     true
+  end
+
+  def ever_moved?(piece)
+    return false if piece.is_a?(Rook) && (piece == EMPTY)
+
+    piece.has_moved
   end
 
   def rook(board, color, side)
@@ -106,7 +91,7 @@ class Castle
     end
   end
 
-  def no_of_empty_squares_between_king_and_rook(side)
+  def no_of_squares_between_king_and_rook(side)
     if side == :king
       2
     else
