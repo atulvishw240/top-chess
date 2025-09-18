@@ -79,7 +79,16 @@ describe Castle do
       rook = Rook.new(Constants::BLACK_FOREGROUND, Position.new(0, 0))
       board = Board.new([king, rook], [])
       castling = Castle.new
-      expect(castling.king_side_castling(board, Constants::BLACK_FOREGROUND)).to eq(false)
+      expect(castling.queen_side_castling(board, Constants::BLACK_FOREGROUND)).to eq(false)
+    end
+
+    it 'returns true when black king can castle queen side' do
+      king = King.new(Constants::BLACK_FOREGROUND, Position.new(0, 4))
+      rook = Rook.new(Constants::BLACK_FOREGROUND, Position.new(0, 0))
+      rook2 = Rook.new(Constants::BLACK_FOREGROUND, Position.new(0, 1))
+      board = Board.new([king, rook, rook2], [])
+      castling = Castle.new
+      expect(castling.queen_side_castling(board, Constants::BLACK_FOREGROUND)).to eq(false)
     end
   end
 end
