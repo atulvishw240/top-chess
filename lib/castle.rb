@@ -21,7 +21,13 @@ class Castle
     position = king.position
     2.times do
       position = Position.new(position.row, position.col + 1)
-      return false if board.contains_piece?(position) || opponent_moves.include?(position)
+      return false if board.contains_piece?(position)
+    end
+
+    position = king.position
+    2.times do
+      position = Position.new(position.row, position.col + 1)
+      return false if opponent_moves.include?(position)
     end
 
     true
