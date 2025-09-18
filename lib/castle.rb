@@ -21,11 +21,9 @@ class Castle
     position = king.position
 
     if castling?(board, color)
-      if king_side
-        moves << Position.new(position.row, position.col + 2)
-      elsif queen_side
-        moves << Position.new(position.row, position.col - 2)
-      end
+      moves << Position.new(position.row, position.col + 2) if king_side
+
+      moves << Position.new(position.row, position.col - 2) if queen_side
     end
 
     moves
@@ -94,7 +92,7 @@ class Castle
   end
 
   def ever_moved?(piece)
-    return false if piece == EMPTY
+    return true if piece == EMPTY
 
     piece.has_moved
   end
@@ -153,10 +151,3 @@ class Castle
     board.get_piece(position)
   end
 end
-
-king = King.new(Constants::BLACK_FOREGROUND, Position.new(0, 4))
-rook = Rook.new(Constants::BLACK_FOREGROUND, Position.new(0, 7))
-board = Board.new([king, rook], [])
-castling = Castle.new
-# castling_moves = [Position.new(0, 6)]
-p castling.castling_moves(board, Constants::BLACK_FOREGROUND)
