@@ -21,9 +21,9 @@ class Castle
     position = king.position
 
     if castling?(board, color)
-      moves << Position.new(position.row, position.col + 2) if king_side
+      moves << move(position, :right, 2) if king_side
 
-      moves << Position.new(position.row, position.col - 2) if queen_side
+      moves << move(position, :left, 2) if queen_side
     end
 
     moves
@@ -71,7 +71,7 @@ class Castle
     position = king.position
 
     number.times do
-      position = right_or_left(position, direction(side))
+      position = move(position, direction(side), 1)
       return false if board.contains_piece?(position)
     end
 
@@ -84,7 +84,7 @@ class Castle
     position = king.position
 
     2.times do
-      position = right_or_left(position, direction(side))
+      position = move(position, direction(side), 1)
       return false if opponent_moves.include?(position)
     end
 
@@ -118,14 +118,14 @@ class Castle
     hash[side]
   end
 
-  def right_or_left(position, direction)
+  def move(position, direction, steps)
     row_index = position.row
     col_index = position.col
 
     if direction == :right
-      Position.new(row_index, col_index + 1)
+      Position.new(row_index, col_index + steps)
     else
-      Position.new(row_index, col_index - 1)
+      Position.new(row_index, col_index - steps)
     end
   end
 
