@@ -91,4 +91,15 @@ describe Castle do
       expect(castling.queen_side_castling(board, Constants::BLACK_FOREGROUND)).to eq(false)
     end
   end
+
+  describe '#castling_moves' do
+    it 'return castling move for kingside castling of black' do
+      king = King.new(Constants::BLACK_FOREGROUND, Position.new(0, 4))
+      rook = Rook.new(Constants::BLACK_FOREGROUND, Position.new(0, 7))
+      board = Board.new([king, rook], [])
+      castling = Castle.new
+      castling_moves = [Position.new(0, 6)]
+      expect(castling.castling_moves(board, Constants::BLACK_FOREGROUND)).to eq(castling_moves)
+    end
+  end
 end
