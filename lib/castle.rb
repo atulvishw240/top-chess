@@ -1,5 +1,8 @@
 require_relative 'chess_rules'
 require_relative '../modules/constants'
+require_relative '../pieces/king'
+require_relative '../pieces/rook'
+require_relative '../lib/board'
 # Handles Castling of King
 class Castle
   include Constants
@@ -12,50 +15,57 @@ class Castle
     @rules = ChessRules.new
   end
 
+  def castling?(board, color)
+    king_side_castling(board, color)
+    queen_side_castling(board, color)
+
+    queen_side || king_side
+  end
+
   def king_side_castling(board, color)
     king = board.king(color)
-    return false if king.has_moved || rules.check?(board, color)
+    return if king.has_moved || rules.check?(board, color)
 
     rook = rook(board, color, :king)
-    return false if rook == EMPTY || rook.has_moved
+    return if rook == EMPTY || rook.has_moved
 
     opponent_moves = rules.all_possible_moves_for_opponent(board, color)
     position = king.position
     no_of_empty_squares_between_king_and_rook(:king).times do
       position = right_or_left(position, :right)
-      return false if board.contains_piece?(position)
+      return if board.contains_piece?(position)
     end
 
     position = king.position
     2.times do
       position = right_or_left(position, :right)
-      return false if opponent_moves.include?(position)
+      return if opponent_moves.include?(position)
     end
 
-    true
+    self.king_side = true
   end
 
   def queen_side_castling(board, color)
     king = board.king(color)
-    return false if king.has_moved || rules.check?(board, color)
+    return if king.has_moved || rules.check?(board, color)
 
     rook = rook(board, color, :queen)
-    return false if rook == EMPTY || rook.has_moved
+    return if rook == EMPTY || rook.has_moved
 
     opponent_moves = rules.all_possible_moves_for_opponent(board, color)
     position = king.position
     no_of_empty_squares_between_king_and_rook(:queen).times do
       position = right_or_left(position, :left)
-      return false if board.contains_piece?(position)
+      return if board.contains_piece?(position)
     end
 
     position = king.position
     2.times do
       position = right_or_left(position, :left)
-      return false if opponent_moves.include?(position)
+      return if opponent_moves.include?(position)
     end
 
-    true
+    self.queen_side = true
   end
 
   def rook(board, color, side)
