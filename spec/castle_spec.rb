@@ -63,4 +63,23 @@ describe Castle do
       expect(castling.king_side_castling(board, Constants::BLACK_FOREGROUND)).to eq(false)
     end
   end
+
+  describe '#queen_side_castling for black' do
+    it 'returns true when black king can castle queen side' do
+      king = King.new(Constants::BLACK_FOREGROUND, Position.new(0, 4))
+      rook = Rook.new(Constants::BLACK_FOREGROUND, Position.new(0, 0))
+      board = Board.new([king, rook], [])
+      castling = Castle.new
+      expect(castling.queen_side_castling(board, Constants::BLACK_FOREGROUND)).to eq(true)
+    end
+
+    it 'returns true when black king can castle queen side' do
+      king = King.new(Constants::BLACK_FOREGROUND, Position.new(0, 4))
+      king.has_moved = true
+      rook = Rook.new(Constants::BLACK_FOREGROUND, Position.new(0, 0))
+      board = Board.new([king, rook], [])
+      castling = Castle.new
+      expect(castling.king_side_castling(board, Constants::BLACK_FOREGROUND)).to eq(false)
+    end
+  end
 end
