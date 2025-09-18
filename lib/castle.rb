@@ -14,19 +14,19 @@ class Castle
     king = board.king(color)
     return false if king.has_moved || rules.check?(board, color)
 
-    rook = king_side_rook(board, color)
+    rook = king_side_rook(board, color) # Different
     return false if rook == EMPTY || rook.has_moved
 
     opponent_moves = rules.all_possible_moves_for_opponent(board, color)
     position = king.position
-    2.times do
-      position = Position.new(position.row, position.col + 1)
+    2.times do # Different
+      position = Position.new(position.row, position.col + 1) # Different
       return false if board.contains_piece?(position)
     end
 
     position = king.position
     2.times do
-      position = Position.new(position.row, position.col + 1)
+      position = Position.new(position.row, position.col + 1) # Different
       return false if opponent_moves.include?(position)
     end
 
@@ -37,19 +37,19 @@ class Castle
     king = board.king(color)
     return false if king.has_moved || rules.check?(board, color)
 
-    rook = queen_side_rook(board, color)
+    rook = queen_side_rook(board, color) # Different
     return false if rook == EMPTY || rook.has_moved
 
     opponent_moves = rules.all_possible_moves_for_opponent(board, color)
     position = king.position
-    3.times do
-      position = Position.new(position.row, position.col - 1)
+    3.times do # Different
+      position = Position.new(position.row, position.col - 1) # Different
       return false if board.contains_piece?(position)
     end
 
     position = king.position
     2.times do
-      position = Position.new(position.row, position.col - 1)
+      position = Position.new(position.row, position.col - 1) # Different
       return false if opponent_moves.include?(position)
     end
 
